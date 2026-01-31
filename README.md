@@ -5,6 +5,8 @@ A modern, responsive portfolio website showcasing my work in AI/ML and Full-Stac
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
+<img width="1919" height="875" alt="image" src="https://github.com/user-attachments/assets/47477158-40e5-4a96-9f64-834f8d1199bf" />
+
 
 ## ✨ Features
 
