@@ -256,7 +256,7 @@ export default function About() {
                                 className="group relative"
                             >
                                 {/* Category Card */}
-                                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-border hover:border-accent hover:shadow-lg transition-all cursor-pointer h-full pop-3d">
+                                <div className="bg-white rounded-xl p-4 border border-border hover:border-accent hover:shadow-lg transition-all cursor-pointer h-full pop-3d">
                                     <p className="font-semibold text-foreground group-hover:text-accent transition-colors text-center">
                                         {category}
                                     </p>

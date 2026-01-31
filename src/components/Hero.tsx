@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { DoodleWave, DoodleArrowDown, DoodleSparkle, DoodleWavingHand } from './Doodles'
+import TypingText from './TypingText'
 
 export default function Hero() {
     const sectionRef = useRef<HTMLElement>(null)
@@ -48,7 +49,9 @@ export default function Hero() {
                             <span className="text-foreground">Full-Stack Development</span>
                             {' '}to build systems that{' '}
                             <span className="relative inline-block">
-                                <span className="relative z-10">actually work</span>
+                                <span className="relative z-10">
+                                    <TypingText text="actually work" speed={80} delay={1500} />
+                                </span>
                                 <svg className="absolute -bottom-1 left-0 w-full h-3" viewBox="0 0 200 12" preserveAspectRatio="none">
                                     <path
                                         d="M5 8 Q 50 3, 100 7 T 195 6"
@@ -107,9 +110,9 @@ export default function Hero() {
                             </div>
 
                             {/* Thought bubble */}
-                            <div className="absolute -top-4 -right-8 md:-right-16 bg-white/80 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm border border-border animate-bounce-slow hidden md:block">
+                            <div className="absolute -top-4 -right-8 md:-right-16 bg-white backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm border border-border animate-bounce-slow hidden md:block">
                                 <p className="text-sm italic text-foreground-muted">Let&apos;s build something!</p>
-                                <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white/80 border-l border-b border-border rotate-[-45deg]" />
+                                <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white border-l border-b border-border rotate-[-45deg]" />
                             </div>
                         </div>
                     </div>

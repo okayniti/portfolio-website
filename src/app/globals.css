@@ -11,8 +11,8 @@
 
 @layer base {
   :root {
-    --color-bg: 237 237 206;
-    /* #EDEDCE Cream */
+    --color-bg: 255 255 255;
+    /* White */
     --color-fg: 12 44 85;
     /* #0C2C55 Deep Navy */
     --color-fg-muted: 41 99 116;
@@ -23,6 +23,19 @@
     /* #629FAD Light Teal */
   }
 
+  .dark {
+    --color-bg: 12 44 85;
+    /* #0C2C55 Deep Navy */
+    --color-fg: 237 237 206;
+    /* #EDEDCE Cream */
+    --color-fg-muted: 98 159 173;
+    /* #629FAD Light Teal */
+    --color-accent: 98 159 173;
+    /* #629FAD Light Teal */
+    --color-border: 41 99 116;
+    /* #296374 Teal */
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -30,7 +43,11 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    background-color: #FFFFFF;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    background-color: #0C2C55;
   }
 
   body::before {
@@ -51,6 +68,23 @@
 
   ::selection {
     @apply bg-accent/20 text-foreground;
+  }
+
+  /* Smooth page transitions */
+  section {
+    animation: fadeSlideIn 0.6s ease-out both;
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -103,6 +137,10 @@
   /* Glassmorphism cards */
   .glass-card {
     @apply bg-white/60 backdrop-blur-md border border-white/40 rounded-2xl;
+  }
+
+  .dark .glass-card {
+    @apply bg-navy/60 border-light-teal/30;
   }
 }
 
@@ -186,6 +224,10 @@
     @apply bg-white/60 backdrop-blur-md border border-white/40 rounded-2xl;
     transform-style: preserve-3d;
     transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  .dark .glass-3d {
+    @apply bg-navy/60 border-light-teal/30;
   }
 
   .glass-3d:hover {

@@ -49,7 +49,7 @@ export default function Navigation() {
                     Niti K.
                 </a>
 
-                {/* Nav Links - pill shaped */}
+                {/* Nav Links */}
                 <ul className="flex items-center gap-2">
                     {navItems.map((item) => (
                         <li key={item.href}>
@@ -69,3 +69,4 @@ export default function Navigation() {
         </header>
     )
 }
+

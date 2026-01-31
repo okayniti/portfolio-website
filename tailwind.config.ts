@@ -9,16 +9,12 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                // Ocean Theme - ColorHunt Palette (White Background)
+                // Ocean Theme - ColorHunt Palette (Light Mode Only)
                 // #0C2C55 (Deep Navy) | #296374 (Teal) | #629FAD (Light Teal) | #EDEDCE (Cream)
-                background: {
-                    DEFAULT: '#FFFFFF',  // White
-                    dark: '#0C2C55',     // Deep Navy
-                },
+                background: '#FFFFFF',
                 foreground: {
                     DEFAULT: '#0C2C55',  // Deep Navy
                     muted: '#296374',    // Teal
-                    dark: '#FFFFFF',     // White
                 },
                 accent: {
                     DEFAULT: '#296374',  // Teal

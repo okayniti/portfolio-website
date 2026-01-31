@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import CustomCursor from '@/components/CustomCursor'
+import ScrollProgress from '@/components/ScrollProgress'
 
 export const metadata: Metadata = {
     title: 'Niti Kanoongo — AI/ML Developer & Designer',
@@ -20,9 +22,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className="min-h-screen">
+            <body className="min-h-screen bg-white">
+                <CustomCursor />
+                <ScrollProgress />
                 {children}
             </body>
         </html>
     )
 }
+

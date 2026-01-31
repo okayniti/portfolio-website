@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react'
 import { DoodleSparkle } from './Doodles'
 
 const socialLinks = [
-    { label: 'GitHub', href: 'https://github.com/nitikanoongo' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/nitikanoongo' },
-    { label: 'Codolio', href: 'https://codolio.com/profile/nitikanoongo' },
+    { label: 'GitHub', href: 'https://github.com/okayniti' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/niti-kanoongo/' },
+    { label: 'Codolio', href: 'https://codolio.com/profile/okayniti' },
 ]
 
 export default function Contact() {
