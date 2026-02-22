@@ -51,6 +51,7 @@ export const projects: Project[] = [
         description:
             'Owned end-to-end development and deployment of a production website for an education initiative, improving UI/UX and performance. Led a small development team.',
         tags: ['Web Development', 'UI/UX', 'Team Leadership', 'Production Deployment'],
+        image: '/AspirantWebsite.png',
         year: '2025',
         problem: 'Translated organizational requirements into a polished, performant web experience.',
         nitiGptContext:

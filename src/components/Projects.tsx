@@ -88,9 +88,17 @@ export default function Projects() {
                                     </div>
 
                                     <div className="aspect-[4/3] bg-gradient-to-br from-border/30 to-border/10 rounded-2xl overflow-hidden border-2 border-dashed border-border/50 flex items-center justify-center tilt-hover">
-                                        <span className="text-6xl opacity-40 group-hover:scale-110 transition-transform duration-300">
-                                            {projectEmojis[index] || '📦'}
-                                        </span>
+                                        {project.image ? (
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            />
+                                        ) : (
+                                            <span className="text-6xl opacity-40 group-hover:scale-110 transition-transform duration-300">
+                                                {projectEmojis[index] || '📦'}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 
