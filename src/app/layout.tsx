@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import ScrollProgress from '@/components/ScrollProgress'
+import AntigravityBackground from '@/components/AntigravityBackground'
 
 export const metadata: Metadata = {
     title: 'Niti Kanoongo — AI/ML Developer & Designer',
@@ -22,10 +23,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className="min-h-screen bg-white">
+            <body className="min-h-screen bg-black">
+                <AntigravityBackground />
                 <CustomCursor />
                 <ScrollProgress />
-                {children}
+                <div className="relative z-10">
+                    {children}
+                </div>
             </body>
         </html>
     )
