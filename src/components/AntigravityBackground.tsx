@@ -29,7 +29,7 @@ export default function AntigravityBackground() {
                     waveAmplitude={1}
                     particleSize={2}
                     lerpSpeed={0.1}
-                    color="#FF9FFC"
+                    color="#F4A7BB"
                     autoAnimate={false}
                     particleVariance={1}
                     rotationSpeed={0}
