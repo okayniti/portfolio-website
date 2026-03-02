@@ -4,7 +4,7 @@ A modern, responsive portfolio showcasing my work in AI/ML and Full-Stack Develo
 
 ## 🔗 [View Live Site](https://portfolio-niti-kanoongo.vercel.app/)
 
-![Portfolio Preview](https://github.com/user-attachments/assets/47477158-40e5-4a96-9f64-834f8d1199bf)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d0c9328d-77cd-48d3-8921-9db8848f0673" />
 
 ---
 
