@@ -23,14 +23,14 @@ export default function AntigravityBackground() {
             <div style={{ width: '100%', height: '100%', pointerEvents: 'auto' }}>
                 <Antigravity
                     count={300}
-                    magnetRadius={10}
-                    ringRadius={10}
+                    magnetRadius={6}
+                    ringRadius={7}
                     waveSpeed={0.4}
                     waveAmplitude={1}
-                    particleSize={2}
-                    lerpSpeed={0.1}
-                    color="#F4A7BB"
-                    autoAnimate={false}
+                    particleSize={1.5}
+                    lerpSpeed={0.05}
+                    color="#e2a7d2"
+                    autoAnimate
                     particleVariance={1}
                     rotationSpeed={0}
                     depthFactor={1}
