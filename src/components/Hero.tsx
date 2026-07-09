@@ -10,13 +10,16 @@ export default function Hero() {
         <section className="min-h-screen flex flex-col justify-between relative pt-32 pb-12 overflow-hidden bg-background">
             <FloatingShapes variant="hero" />
 
+            {/* Radiant Ambient Orange Glow behind the Portrait */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-accent/15 blur-[100px] pointer-events-none z-0" />
+
             {/* Main Center Composition: Giant Name overlapped by Portrait */}
-            <div className="flex-1 flex flex-col items-center justify-center relative w-full px-6">
+            <div className="flex-1 flex flex-col items-center justify-center relative w-full px-6 z-10">
                 
-                {/* Background Giant Text */}
+                {/* Background Giant Text - Low opacity white watermark */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-0">
                     <motion.h1
-                        className="text-[22vw] md:text-[20vw] font-display font-bold leading-[0.8] text-white tracking-tighter text-center uppercase"
+                        className="text-[22vw] md:text-[20vw] font-display font-bold leading-[0.8] text-white/[0.05] tracking-tighter text-center uppercase"
                         style={{ fontFamily: 'var(--font-general-sans)' }}
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -28,9 +31,9 @@ export default function Hero() {
                     </motion.h1>
                 </div>
 
-                {/* Overlaid Portrait Image */}
+                {/* Overlaid Portrait Image with Orange Ring Border */}
                 <motion.div
-                    className="relative z-10 w-60 sm:w-72 md:w-80 lg:w-[340px] aspect-[3/4] rounded-[2.5rem] overflow-hidden border border-black/5 shadow-2xl bg-white"
+                    className="relative z-10 w-60 sm:w-72 md:w-80 lg:w-[340px] aspect-[3/4] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-card"
                     initial={{ opacity: 0, scale: 0.92, y: 30 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -42,11 +45,11 @@ export default function Hero() {
                         loading="eager"
                     />
 
-                    {/* Faint overlay on portrait for premium feel */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+                    {/* Gradient overlay for premium depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none" />
                 </motion.div>
 
-                {/* Left Floating Badge: Hi, I am */}
+                {/* Left Floating Badge: Greeting */}
                 <motion.div 
                     className="absolute top-1/4 left-[8%] md:left-[12%] hidden sm:block z-20"
                     initial={{ opacity: 0, x: -20 }}
@@ -56,7 +59,7 @@ export default function Hero() {
                     <p className="text-body-sm text-foreground-muted font-medium tracking-wide">
                         Hi, I am
                     </p>
-                    <p className="text-sm font-display text-foreground font-semibold uppercase tracking-wider">
+                    <p className="text-sm font-display text-accent font-semibold uppercase tracking-wider">
                         ✦ AI/ML Developer
                     </p>
                 </motion.div>
@@ -71,14 +74,14 @@ export default function Hero() {
                     <p className="text-body-sm text-foreground-muted font-medium tracking-wide text-right">
                         Based in
                     </p>
-                    <p className="text-sm font-display text-foreground font-semibold uppercase tracking-wider text-right">
+                    <p className="text-sm font-display text-accent font-semibold uppercase tracking-wider text-right">
                         Pune, India 📍
                     </p>
                 </motion.div>
             </div>
 
             {/* Bottom Content Grid */}
-            <div className="w-full relative z-20 mt-auto border-t border-black/[0.04] pt-8">
+            <div className="w-full relative z-20 mt-auto border-t border-white/5 pt-8">
                 <div className="container-content grid md:grid-cols-3 gap-8 items-end">
                     
                     {/* Column 1: Short Tagline / Title */}
@@ -87,7 +90,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <p className="text-xs uppercase tracking-widest text-foreground-muted font-semibold mb-2">
+                        <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-2">
                             Overview
                         </p>
                         <h3 className="text-lg font-semibold text-foreground mb-2 leading-snug">
@@ -112,7 +115,7 @@ export default function Hero() {
                             animate={{ y: [0, 6, 0] }}
                             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                         >
-                            <ArrowDown size={14} className="text-foreground-muted" />
+                            <ArrowDown size={14} className="text-accent" />
                         </motion.div>
                     </motion.div>
 
@@ -124,22 +127,22 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     >
                         <div className="flex flex-wrap gap-3 justify-start md:justify-end">
-                            <span className="px-3 py-1 text-xs bg-white text-foreground-muted rounded-full border border-black/5 whitespace-nowrap shadow-sm">
+                            <span className="px-3 py-1 text-xs bg-card text-foreground-muted rounded-full border border-white/5 whitespace-nowrap shadow-sm">
                                 900+ problems solved
                             </span>
-                            <span className="px-3 py-1 text-xs bg-white text-foreground-muted rounded-full border border-black/5 whitespace-nowrap shadow-sm">
+                            <span className="px-3 py-1 text-xs bg-card text-foreground-muted rounded-full border border-white/5 whitespace-nowrap shadow-sm">
                                 30+ MUNs
                             </span>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3">
                             <MagneticButton href="#work" variant="primary">
-                                <span className="flex items-center gap-1.5 py-0.5 text-xs">
+                                <span className="flex items-center gap-1.5 py-0.5 text-xs font-semibold">
                                     View Work <ArrowUpRight size={14} strokeWidth={2.5} />
                                 </span>
                             </MagneticButton>
                             <MagneticButton href="#contact" variant="secondary">
-                                <span className="py-0.5 text-xs">Contact</span>
+                                <span className="py-0.5 text-xs font-semibold">Contact</span>
                             </MagneticButton>
                         </div>
                     </motion.div>

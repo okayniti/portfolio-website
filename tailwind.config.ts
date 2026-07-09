@@ -9,19 +9,20 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                // Premium Minimal Palette
-                background: '#F6F2EC',
-                card: '#FFFFFF',
+                // Premium Dark Orange/Brown Palette (Behance style)
+                background: '#120800',
+                card: '#1C0D02',
                 foreground: {
-                    DEFAULT: '#111111',
-                    muted: '#666666',
+                    DEFAULT: '#FFFFFF',
+                    muted: 'rgba(255, 255, 255, 0.65)',
                 },
                 accent: {
-                    DEFAULT: '#000000',
+                    DEFAULT: '#ED7A36',
+                    deep: '#DD4D06',
                 },
                 border: {
-                    DEFAULT: 'rgba(0,0,0,0.08)',
-                    strong: 'rgba(0,0,0,0.15)',
+                    DEFAULT: 'rgba(255, 255, 255, 0.08)',
+                    strong: 'rgba(255, 255, 255, 0.15)',
                 },
             },
             fontFamily: {
