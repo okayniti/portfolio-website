@@ -1,169 +1,128 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 import { projects } from '@/lib/projects'
-import { DoodleSparkle, DoodleArrowRight, DoodleUnderline } from './Doodles'
+import SectionHeader from './SectionHeader'
+import MagneticButton from './MagneticButton'
 
 export default function Projects() {
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const elements = entry.target.querySelectorAll('.reveal')
-                        elements.forEach((el, index) => {
-                            setTimeout(() => {
-                                el.classList.add('visible')
-                            }, index * 150)
-                        })
-                    }
-                })
-            },
-            { threshold: 0.1 }
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
+    const ref = useRef<HTMLElement>(null)
+    const isInView = useInView(ref, { once: true, margin: '-60px' })
 
     const projectEmojis = ['🩻', '🏗️', '🛡️', '🌐']
 
     return (
-        <section
-            ref={sectionRef}
-            id="work"
-            className="section-padding relative"
-        >
-            {/* Floating doodle decorations */}
-            <div className="absolute top-10 left-10 opacity-30 animate-float hidden lg:block">
-                <DoodleSparkle className="w-8 h-8 text-accent" />
-            </div>
-            <div className="absolute top-1/3 right-8 opacity-20 animate-pulse hidden lg:block">
-                <DoodleSparkle className="w-6 h-6 text-accent" />
-            </div>
-            <div className="absolute bottom-20 left-1/4 opacity-25 animate-bounce-slow hidden lg:block">
-                <DoodleSparkle className="w-5 h-5 text-accent" />
-            </div>
-
+        <section ref={ref} id="work" className="section-padding relative">
             <div className="container-content">
-                {/* Section header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-section reveal inline-flex items-center gap-4">
-                        Here&apos;s{' '}
-                        <span className="relative">
-                            <span className="relative z-10">how</span>
-                            <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 12" preserveAspectRatio="none">
-                                <path
-                                    d="M5 8 Q 25 3, 50 7 T 95 6"
-                                    stroke="#296374"
-                                    strokeWidth="4"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    opacity="0.5"
-                                />
-                            </svg>
-                        </span>
-                        <DoodleSparkle className="w-6 h-6 animate-pulse" />
-                    </h2>
-                </div>
+                <SectionHeader
+                    label="Some Recent Projects"
+                    heading="Selected Work That Delivers Results"
+                />
 
                 {/* Projects */}
-                <div className="space-y-24">
+                <div className="space-y-12 md:space-y-16">
                     {projects.map((project, index) => (
-                        <article
+                        <ProjectCard
                             key={project.id}
-                            className="reveal group"
-                        >
-                            <div className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'md:grid-flow-dense' : ''
-                                }`}>
-                                {/* Project image placeholder */}
-                                <div className={`relative ${index % 2 === 1 ? 'md:col-start-2' : ''}`}>
-                                    <div className="absolute -top-4 -left-4 animate-float opacity-60">
-                                        <DoodleSparkle className="w-6 h-6" />
-                                    </div>
-
-                                    <div className="aspect-[4/3] bg-gradient-to-br from-border/30 to-border/10 rounded-2xl overflow-hidden border-2 border-dashed border-border/50 flex items-center justify-center tilt-hover">
-                                        {project.image ? (
-                                            <img
-                                                src={project.image}
-                                                alt={project.title}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                            />
-                                        ) : (
-                                            <span className="text-6xl opacity-40 group-hover:scale-110 transition-transform duration-300">
-                                                {projectEmojis[index] || '📦'}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Project info */}
-                                <div className={index % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}>
-                                    <span className="text-caption text-accent font-medium">
-                                        {project.year} | {project.tags.slice(0, 2).join(', ')}
-                                    </span>
-
-                                    <h3 className="text-2xl md:text-3xl font-bold mt-3 mb-1 group-hover:text-accent transition-colors">
-                                        <span className="relative inline-block">
-                                            {project.title}
-                                            <DoodleUnderline className="absolute -bottom-1 left-0 w-full" />
-                                        </span>
-                                    </h3>
-
-                                    {/* Problem solved */}
-                                    <div className="flex items-start gap-2 mt-4 mb-3">
-                                        <span className="text-accent mt-0.5">✦</span>
-                                        <p className="text-sm text-accent font-medium italic">
-                                            {project.problem}
-                                        </p>
-                                    </div>
-
-                                    <p className="text-body text-foreground-muted mb-6">
-                                        {project.description}
-                                    </p>
-
-                                    {/* Tags */}
-                                    <div className="flex flex-wrap gap-2 mb-6">
-                                        {project.tags.map((tag) => (
-                                            <span
-                                                key={tag}
-                                                className="px-3 py-1 text-caption bg-accent/10 text-accent rounded-full"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    {/* View link */}
-                                    <a
-                                        href={project.link || '#'}
-                                        className="inline-flex items-center gap-2 text-sm font-semibold text-accent group/link"
-                                    >
-                                        View Project
-                                        <span className="transition-transform group-hover/link:translate-x-1">
-                                            <DoodleArrowRight className="w-8 h-4" />
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
+                            project={project}
+                            index={index}
+                            emoji={projectEmojis[index] || '📦'}
+                            isInView={isInView}
+                        />
                     ))}
                 </div>
+            </div>
+        </section>
+    )
+}
 
-                {/* Experimenting badge */}
-                <div className="mt-24 flex justify-center reveal">
-                    <div className="relative">
-                        <div className="bg-accent text-white px-8 py-4 rounded-full transform -rotate-3 font-bold text-lg">
-                            I ✨ Experiment a lot
+interface ProjectCardProps {
+    project: typeof projects[0]
+    index: number
+    emoji: string
+    isInView: boolean
+}
+
+function ProjectCard({ project, index, emoji, isInView }: ProjectCardProps) {
+    const cardRef = useRef<HTMLDivElement>(null)
+    const cardInView = useInView(cardRef, { once: true, margin: '-80px' })
+
+    const isReversed = index % 2 === 1
+
+    return (
+        <motion.article
+            ref={cardRef}
+            className="group"
+            initial={{ opacity: 0, y: 40 }}
+            animate={cardInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+            <div className="premium-card !p-0 overflow-hidden">
+                <div className={`grid md:grid-cols-2 ${isReversed ? 'md:grid-flow-dense' : ''}`}>
+                    {/* Image */}
+                    <div className={`relative overflow-hidden ${isReversed ? 'md:col-start-2' : ''}`}>
+                        <div className="aspect-[4/3] bg-background flex items-center justify-center overflow-hidden">
+                            {project.image ? (
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-premium group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div className="flex flex-col items-center gap-3 text-foreground-muted">
+                                    <span className="text-6xl opacity-40 group-hover:scale-110 transition-transform duration-500">
+                                        {emoji}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className={`p-8 md:p-10 lg:p-12 flex flex-col justify-center ${isReversed ? 'md:col-start-1 md:row-start-1' : ''}`}>
+                        {/* Year & category */}
+                        <p className="text-label uppercase tracking-widest text-foreground-muted mb-4">
+                            {project.year} · {project.tags.slice(0, 2).join(' · ')}
+                        </p>
+
+                        {/* Title */}
+                        <h3 className="text-heading font-display mb-3 group-hover:opacity-70 transition-opacity duration-300">
+                            {project.title}
+                        </h3>
+
+                        {/* Problem */}
+                        <p className="text-body-sm text-foreground-muted italic mb-4">
+                            {project.problem}
+                        </p>
+
+                        {/* Description */}
+                        <p className="text-body text-foreground-muted mb-6 leading-relaxed">
+                            {project.description}
+                        </p>
+
+                        {/* Tech tags */}
+                        <div className="flex flex-wrap gap-2 mb-8">
+                            {project.tags.map((tag) => (
+                                <span key={tag} className="tech-pill">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+
+                        {/* View link */}
+                        <div className="mt-2">
+                            <MagneticButton href={project.link || '#'} variant="secondary">
+                                <span className="flex items-center gap-1.5 py-0.5 text-xs font-semibold">
+                                    View Project <ArrowUpRight size={14} strokeWidth={2.5} />
+                                </span>
+                            </MagneticButton>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </motion.article>
     )
 }
