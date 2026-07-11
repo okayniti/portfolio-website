@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=League+Gothic&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +12,7 @@
 @layer base {
   :root {
     --font-inter: 'Outfit', 'Inter', system-ui, sans-serif;
-    --font-general-sans: 'League Gothic', sans-serif;
+    --font-general-sans: 'Plus Jakarta Sans', 'Outfit', sans-serif;
   }
 
   html {
@@ -26,13 +26,10 @@
     font-family: var(--font-inter);
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     
-    /* Intricate Behance-style Starry Background + Radiant Orange Ambient Glows */
-    background-image: 
-      radial-gradient(circle at 50% 30%, rgba(237, 122, 54, 0.06) 0%, transparent 60%),
-      radial-gradient(circle at 10% 70%, rgba(221, 77, 6, 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 90% 80%, rgba(237, 122, 54, 0.05) 0%, transparent 50%),
-      radial-gradient(rgba(255, 255, 255, 0.06) 1.5px, transparent 1.5px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px;
+    background-image: url('/bg-gradient.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
   }
 
@@ -127,7 +124,7 @@
 
   /* Stat card number */
   .stat-number {
-    @apply text-display font-display font-bold text-foreground tracking-tighter;
+    @apply text-display font-display font-bold text-foreground tracking-normal;
   }
 
   /* Link underline animation */
