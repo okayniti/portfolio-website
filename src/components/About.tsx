@@ -38,7 +38,7 @@ export default function About() {
             <div className="container-content">
                 <SectionHeader
                     label="About Me"
-                    heading="I think in systems, not just screens"
+                    heading="I blend AI & Machine Learning with Full-Stack Development to build systems that actually work"
                 />
 
                 <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
