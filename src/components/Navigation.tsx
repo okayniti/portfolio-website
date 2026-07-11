@@ -59,7 +59,7 @@ export default function Navigation() {
                     {/* Logo */}
                     <a
                         href="#"
-                        className="text-lg font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
+                        className="text-2xl md:text-3xl font-bold tracking-wide text-foreground hover:opacity-70 transition-opacity"
                     >
                         Niti K.
                     </a>

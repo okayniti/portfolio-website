@@ -76,7 +76,7 @@ export default function Footer() {
 
                 {/* Large display name */}
                 <div className="mb-10">
-                    <p className="text-[clamp(4rem,14vw,12rem)] font-display font-bold leading-none tracking-tighter text-gradient-fade select-none uppercase">
+                    <p className="text-[clamp(3.5rem,11vw,9.5rem)] font-display font-bold leading-none tracking-wider text-gradient-fade select-none uppercase">
                         NITI KANOONGO
                     </p>
                 </div>
