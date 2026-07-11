@@ -7,7 +7,7 @@ import FloatingShapes from './FloatingShapes'
 
 export default function Hero() {
     return (
-        <section className="min-h-screen flex flex-col justify-between relative pt-32 pb-12 overflow-hidden bg-background">
+        <section className="min-h-screen flex flex-col justify-between relative pt-32 pb-12 overflow-hidden bg-transparent">
             <FloatingShapes variant="hero" />
 
             {/* Radiant Ambient Orange Glow behind the Portrait */}
@@ -16,10 +16,30 @@ export default function Hero() {
             {/* Main Center Composition: Giant Name overlapped by Portrait */}
             <div className="flex-1 flex flex-col items-center justify-center relative w-full px-6 z-10">
                 
+                {/* Overlaid Portrait Image with Orange Ring Border */}
+                <motion.div
+                    className="relative z-10 w-60 sm:w-72 md:w-80 lg:w-[320px] aspect-square rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-card"
+                    initial={{ opacity: 0, scale: 0.92, y: 30 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <img
+                        src="/avatar-sketch.png"
+                        alt="Niti Kanoongo Portrait"
+                        className="w-full h-full object-cover object-center"
+                        loading="eager"
+                    />
+
+                    {/* Gradient overlay for premium depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none" />
+                </motion.div>
+
                 {/* Background Giant Text - Low opacity white watermark */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-0">
+                <div 
+                    className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-20"
+                >
                     <motion.h1
-                        className="text-[22vw] md:text-[20vw] font-display font-bold leading-[0.8] text-white/[0.05] tracking-tighter text-center uppercase"
+                        className="text-[15vw] md:text-[13vw] font-display font-bold leading-[0.8] text-accent/20 tracking-wider text-center uppercase"
                         style={{ fontFamily: 'var(--font-general-sans)' }}
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -30,24 +50,6 @@ export default function Hero() {
                         KANOONGO
                     </motion.h1>
                 </div>
-
-                {/* Overlaid Portrait Image with Orange Ring Border */}
-                <motion.div
-                    className="relative z-10 w-60 sm:w-72 md:w-80 lg:w-[340px] aspect-[3/4] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-card"
-                    initial={{ opacity: 0, scale: 0.92, y: 30 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <img
-                        src="/avatar.png"
-                        alt="Niti Kanoongo Portrait"
-                        className="w-full h-full object-cover object-center"
-                        loading="eager"
-                    />
-
-                    {/* Gradient overlay for premium depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none" />
-                </motion.div>
 
                 {/* Left Floating Badge: Greeting */}
                 <motion.div 
