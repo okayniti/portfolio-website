@@ -7,16 +7,16 @@ import SectionHeader from './SectionHeader'
 
 const experiences = [
     {
-        role: 'Website Developer & Reporting Manager',
-        company: 'Aspirant India Initiative',
-        period: '2025',
-        description: 'Owned end-to-end development and deployment of a production website for an education initiative. Led a small development team, improving UI/UX and performance.',
+        role: 'AI/ML Intern',
+        company: 'CovisionAI — Pune, India',
+        period: 'May 2026 – Aug 2026',
+        description: 'Designed and built a Python-based benchmarking framework to evaluate 3 frontier video generation models (Seedance, Kling, Runway) across quality, latency, temporal consistency, and prompt-adherence; findings directly informed production model selection. Engineered robust API integration layers and automated test harnesses across 100+ generation configurations, reducing manual evaluation overhead by 40%. Maintained version-controlled experiment logs and reproducible ML pipelines, enforcing data integrity and strict confidentiality.',
     },
     {
-        role: 'TechBee Program Trainee',
-        company: 'HCL Tech',
-        period: '2022 – 2023',
-        description: 'Industry training program covering software engineering fundamentals, cloud technologies, and professional development in a corporate tech environment.',
+        role: 'Website Developer & Reporting Manager',
+        company: 'Aspirant India Initiative — Remote',
+        period: 'Mar 2025 – Jul 2025',
+        description: 'Architected and deployed a production web platform serving 40,000+ students across 500+ institutions. Owned the full system lifecycle from design through post-launch, leading a 3-developer team via sprint planning and code reviews. Shipped features for 9 national SDG summit events across 5 months with zero production incidents, coordinating cross-functional requirements across PR, curriculum, and operations.',
     },
 ]
 
