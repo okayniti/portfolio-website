@@ -11,7 +11,7 @@ export default function Projects() {
     const ref = useRef<HTMLElement>(null)
     const isInView = useInView(ref, { once: true, margin: '-60px' })
 
-    const projectEmojis = ['🩻', '🏗️', '🛡️', '🌐']
+    const projectEmojis = ['🚨', '🌌', '🧸']
 
     return (
         <section ref={ref} id="work" className="section-padding relative">

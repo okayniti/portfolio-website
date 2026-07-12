@@ -34,4 +34,15 @@ export const projects: Project[] = [
         problem: 'Optimized bundle sizes to 105 KB and minimized server-side compute overhead for real-time model inference.',
         link: 'https://github.com/okayniti',
     },
+    {
+        id: 'vocasense',
+        title: 'VocaSense Kids — AI Vocal Emotion Analyzer',
+        description:
+            'Designed and built an AI-powered emotional intelligence tool for children that analyzes vocal patterns—tone, pitch, and energy—to detect underlying emotions. Engineered custom feature extraction scripts using Librosa to calculate Mel-frequency cepstral coefficients (MFCCs) and Root Mean Square (RMS) energy. Designed robust silence detection and a positivity bias calibration algorithm to prevent false positives from kids\' natural high pitches. Built the backend using Flask and Scikit-learn Random Forest model, and designed a kid-friendly responsive interface.',
+        tags: ['Python', 'Flask', 'Librosa', 'Scikit-learn', 'Random Forest', 'HTML5/CSS3', 'Vanilla JS'],
+        category: 'AI/ML & Audio DSP',
+        year: '2025',
+        problem: 'Correcting sentiment analysis models to accurately interpret the high pitch and energy variations of children\'s vocal patterns while filtering background noise.',
+        link: 'https://github.com/okayniti/VocaSense',
+    },
 ]
