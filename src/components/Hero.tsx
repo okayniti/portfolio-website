@@ -96,10 +96,10 @@ export default function Hero() {
                             Overview
                         </p>
                         <h3 className="text-lg font-semibold text-foreground mb-2 leading-snug">
-                            AI/ML &amp; Full-Stack Systems
+                            AI/ML &amp; Systems Engineer
                         </h3>
                         <p className="text-sm text-foreground-muted leading-relaxed max-w-xs">
-                            B.Tech CSE @ VIT Bhopal. Building production systems across healthcare, fintech, and cybersecurity.
+                            AI/ML Intern @ CovisionAI. Engineering high-throughput video pipelines, RAG systems, and robust full-stack interfaces.
                         </p>
                     </motion.div>
 
@@ -130,7 +130,10 @@ export default function Hero() {
                     >
                         <div className="flex flex-wrap gap-3 justify-start md:justify-end">
                             <span className="px-3 py-1 text-xs bg-card text-foreground-muted rounded-full border border-white/5 whitespace-nowrap shadow-sm">
-                                900+ problems solved
+                                AWS Certified Solutions Architect
+                            </span>
+                            <span className="px-3 py-1 text-xs bg-card text-foreground-muted rounded-full border border-white/5 whitespace-nowrap shadow-sm">
+                                900+ CP Solved
                             </span>
                             <span className="px-3 py-1 text-xs bg-card text-foreground-muted rounded-full border border-white/5 whitespace-nowrap shadow-sm">
                                 30+ MUNs
