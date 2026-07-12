@@ -13,44 +13,25 @@ export interface Project {
 
 export const projects: Project[] = [
     {
-        id: 'bone-fracture',
-        title: 'Bone Fracture Classification',
+        id: 'sangamdrishti',
+        title: 'SangamDrishti — Real-Time Emergency Command & Control System',
         description:
-            'Built a deep learning system using ResNet18 and MONAI to classify 10 types of bone fractures from X-ray images, handling class imbalance through augmentation and weighted loss.',
-        tags: ['Python', 'ResNet18', 'MONAI', 'Deep Learning', 'Medical AI'],
-        category: 'Healthcare AI',
-        year: '2024',
-        problem: 'Automated fracture detection to improve diagnostic consistency and speed.',
+            'Architected real-time crowd telemetry for Mahakumbh-scale events; engineered a persistent WebSocket pipeline (Socket.io) emitting live sector density and responder coordinates every 4s across 10+ concurrent zones. Implemented geometric proximity dispatch algorithm computing live distance across all active responders, surfacing top 3 nearest units for single-click deployment, eliminating human triage latency under crisis conditions. Built RAG-powered AI advisor (Gemini 2.0 Flash) grounded in 6 embedded SOPs with live telemetry injected per prompt; designed stateless backend with in-memory indexing; deployed to Vercel + Render.',
+        tags: ['React', 'Node.js', 'Express.js', 'Socket.io', 'RAG', 'Gemini 2.0 Flash', 'System Design'],
+        category: 'Real-Time Streaming & AI Systems',
+        year: '2026',
+        problem: 'Eliminated human triage latency and enabled instant situational awareness under crisis conditions.',
+        link: 'https://github.com/okayniti',
     },
     {
-        id: 'crane-dashboard',
-        title: 'Dynamic Crane Dashboard',
+        id: 'aurora',
+        title: 'Aurora — AI Productivity Dashboard',
         description:
-            'Built an IoT-based predictive maintenance system using LSTM and SARIMA models with a real-time monitoring dashboard for early fault detection.',
-        tags: ['IoT', 'LSTM', 'SARIMA', 'Time-Series', 'Dashboard'],
-        category: 'Predictive Maintenance',
-        year: '2024',
-        problem: 'Reduced unplanned downtime by forecasting equipment failures using time-series data.',
-    },
-    {
-        id: 'phishguard',
-        title: 'PhishGuard',
-        description:
-            'Developed a Chrome extension and web tool using supervised ML and REST APIs to detect phishing URLs in real time with high accuracy and low latency.',
-        tags: ['Chrome Extension', 'ML', 'REST APIs', 'Cybersecurity', 'JavaScript'],
-        category: 'Cybersecurity',
-        year: '2024',
-        problem: 'Enabled browser-level phishing protection without degrading user experience.',
-    },
-    {
-        id: 'aspirant-india',
-        title: 'Aspirant India Website',
-        description:
-            'Owned end-to-end development and deployment of a production website for an education initiative, improving UI/UX and performance. Led a small development team.',
-        tags: ['Web Development', 'UI/UX', 'Team Leadership', 'Production Deployment'],
-        category: 'Web Development',
-        image: '/AspirantWebsite.png',
-        year: '2025',
-        problem: 'Translated organizational requirements into a polished, performant web experience.',
+            'Designed modular full-stack system with async FastAPI backend and stateless workers for horizontal scalability; real-time inference endpoints with 60s prediction caching reduce redundant compute across concurrent users. Built LSTM and XGBoost models for burnout detection and energy-level forecasting; integrated SHAP explainability; applied RL for adaptive task scheduling; used transformer embeddings for semantic task alignment. Optimized first-load JS bundle to 105 KB via code-splitting and lazy loading; implemented JWT authentication with modular API design and version-controlled training workflows for reproducible model iteration.',
+        tags: ['Next.js 14', 'FastAPI', 'PyTorch', 'XGBoost', 'PostgreSQL', 'Docker', 'SHAP', 'Reinforcement Learning'],
+        category: 'Full-Stack ML Systems',
+        year: '2026',
+        problem: 'Optimized bundle sizes to 105 KB and minimized server-side compute overhead for real-time model inference.',
+        link: 'https://github.com/okayniti',
     },
 ]
