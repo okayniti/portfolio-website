@@ -7,24 +7,24 @@ import SectionHeader from './SectionHeader'
 
 const skillCategories = [
     {
-        title: 'AI & Machine Learning',
+        title: 'AI & Machine Learning Systems',
         icon: Brain,
-        skills: ['LSTM', 'ResNet18', 'NLP', 'MONAI', 'Time-Series', 'TensorFlow', 'Scikit-learn'],
+        skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'SHAP', 'LSTM', 'CNN', 'RAG', 'Gemini API', 'Prompt Engineering', 'OpenCV'],
     },
     {
-        title: 'Full-Stack Development',
+        title: 'Full-Stack & Real-Time Web',
         icon: Globe,
-        skills: ['Node.js', 'Express.js', 'REST APIs', 'MongoDB', 'HTML/CSS', 'JavaScript'],
+        skills: ['Next.js', 'React', 'FastAPI', 'Node.js', 'Express.js', 'Socket.io', 'REST APIs', 'WebSockets'],
     },
     {
-        title: 'Programming',
-        icon: Code2,
-        skills: ['Python', 'C++', 'JavaScript'],
-    },
-    {
-        title: 'Tools & Platforms',
+        title: 'Infrastructure & Systems',
         icon: Wrench,
-        skills: ['Git', 'Linux', 'AWS', 'GCP', 'MATLAB'],
+        skills: ['Docker', 'Git', 'Linux', 'GCP', 'AWS', 'Azure', 'PostgreSQL', 'MongoDB', 'Firebase', 'Redis', 'Distributed Systems', 'Async Concurrency', 'System Design'],
+    },
+    {
+        title: 'Programming Languages',
+        icon: Code2,
+        skills: ['Python', 'C++', 'JavaScript', 'SQL', 'Bash'],
     },
 ]
 
