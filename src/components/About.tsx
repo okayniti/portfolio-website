@@ -8,9 +8,9 @@ import MagneticButton from './MagneticButton'
 
 const stats = [
     { number: '900+', label: 'Problems Solved' },
-    { number: '30+', label: 'MUN Conferences' },
-    { number: '4+', label: 'Major Projects' },
-    { number: '10+', label: 'Certifications' },
+    { number: '30+', label: 'Model UN Conferences' },
+    { number: 'AWS', label: 'Certified Solutions Architect' },
+    { number: 'Selected', label: 'Amazon ML Summer School' },
 ]
 
 export default function About() {
@@ -69,12 +69,14 @@ export default function About() {
                         <motion.div className="space-y-5" variants={fadeUp}>
                             <p className="text-body leading-relaxed text-foreground-muted">
                                 I&apos;m a <strong className="text-foreground font-medium">B.Tech Computer Science</strong> student at VIT Bhopal,
-                                specializing in <strong className="text-foreground font-medium">AI &amp; Machine Learning</strong>. I love working end-to-end—from
-                                problem definition and system design to implementation and debugging.
+                                specializing in <strong className="text-foreground font-medium">AI &amp; Machine Learning</strong> (CGPA: 8.66). I love working end-to-end—from
+                                problem definition and system architecture to high-performance implementation and ML workflow optimization.
                             </p>
                             <p className="text-body leading-relaxed text-foreground-muted">
-                                I&apos;ve built production systems across healthcare AI, predictive maintenance,
-                                and cybersecurity—always adapting quickly to new tech stacks and constraints.
+                                Recently, as an AI/ML Intern at <strong className="text-foreground font-medium">CovisionAI</strong>, I built benchmarking frameworks in Python evaluating frontier video generation models (Seedance, Kling, Runway) to directly inform production selection, and engineered high-throughput automated test harnesses that cut manual evaluation overhead by 40%.
+                            </p>
+                            <p className="text-body leading-relaxed text-foreground-muted">
+                                I specialize in building distributed real-time systems (such as Socket.io telemetry dashboards handling Mahakumbh-scale events) and modular ML pipelines. I combine mathematical depth with robust full-stack engineering.
                             </p>
                         </motion.div>
 
