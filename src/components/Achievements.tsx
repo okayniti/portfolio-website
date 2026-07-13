@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Trophy, Code2, GitBranch, Award, BadgeCheck } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import TiltCard from './TiltCard'
 
 const achievements = [
     {
@@ -77,7 +78,6 @@ export default function Achievements() {
                         return (
                             <motion.div
                                 key={item.label}
-                                className="premium-card text-center group"
                                 variants={{
                                     hidden: { opacity: 0, y: 24 },
                                     visible: {
@@ -87,30 +87,32 @@ export default function Achievements() {
                                     },
                                 }}
                             >
-                                {/* Icon */}
-                                <div className="w-12 h-12 rounded-2xl bg-background border border-border flex items-center justify-center mx-auto mb-5 group-hover:bg-foreground group-hover:text-background transition-all duration-400">
-                                    <Icon size={20} strokeWidth={1.5} />
-                                </div>
+                                <TiltCard className="premium-card text-center group h-full">
+                                    {/* Icon */}
+                                    <div className="w-12 h-12 rounded-2xl bg-background border border-border flex items-center justify-center mx-auto mb-5 group-hover:bg-foreground group-hover:text-background transition-all duration-400">
+                                        <Icon size={20} strokeWidth={1.5} />
+                                    </div>
 
-                                {/* Category */}
-                                <p className="text-label uppercase tracking-widest text-foreground-muted mb-3">
-                                    {item.category}
-                                </p>
+                                    {/* Category */}
+                                    <p className="text-label uppercase tracking-widest text-foreground-muted mb-3">
+                                        {item.category}
+                                    </p>
 
-                                {/* Stat */}
-                                <p className="text-5xl md:text-6xl font-display font-bold text-foreground mb-1 leading-none">
-                                    {item.stat}
-                                </p>
+                                    {/* Stat */}
+                                    <p className="text-5xl md:text-6xl font-display font-bold text-foreground mb-1 leading-none">
+                                        {item.stat}
+                                    </p>
 
-                                {/* Label */}
-                                <p className="text-body-sm font-medium text-foreground mb-1">
-                                    {item.label}
-                                </p>
+                                    {/* Label */}
+                                    <p className="text-body-sm font-medium text-foreground mb-1">
+                                        {item.label}
+                                    </p>
 
-                                {/* Sublabel */}
-                                <p className="text-caption text-foreground-muted">
-                                    {item.sublabel}
-                                </p>
+                                    {/* Sublabel */}
+                                    <p className="text-caption text-foreground-muted">
+                                        {item.sublabel}
+                                    </p>
+                                </TiltCard>
                             </motion.div>
                         )
                     })}

@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { projects } from '@/lib/projects'
 import SectionHeader from './SectionHeader'
 import MagneticButton from './MagneticButton'
+import TiltCard from './TiltCard'
 
 export default function Projects() {
     const ref = useRef<HTMLElement>(null)
@@ -59,7 +60,7 @@ function ProjectCard({ project, index, emoji, isInView }: ProjectCardProps) {
             animate={cardInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-            <div className="premium-card !p-0 overflow-hidden">
+            <TiltCard className="premium-card !p-0 overflow-hidden">
                 <div className={`grid md:grid-cols-2 ${isReversed ? 'md:grid-flow-dense' : ''}`}>
                     {/* Image */}
                     <div className={`relative overflow-hidden ${isReversed ? 'md:col-start-2' : ''}`}>
@@ -122,7 +123,7 @@ function ProjectCard({ project, index, emoji, isInView }: ProjectCardProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </TiltCard>
         </motion.article>
     )
 }

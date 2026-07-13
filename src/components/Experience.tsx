@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Briefcase } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import TiltCard from './TiltCard'
 
 const experiences = [
     {
@@ -65,7 +66,7 @@ export default function Experience() {
                             </div>
 
                             {/* Content */}
-                            <div className="premium-card !p-6 md:!p-8">
+                            <TiltCard className="premium-card !p-6 md:!p-8">
                                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                                     <div>
                                         <h3 className="text-lg font-semibold text-foreground">
@@ -82,7 +83,7 @@ export default function Experience() {
                                 <p className="text-body-sm text-foreground-muted leading-relaxed">
                                     {exp.description}
                                 </p>
-                            </div>
+                            </TiltCard>
                         </motion.div>
                     ))}
                 </motion.div>
