@@ -1,11 +1,14 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight, ArrowDown } from 'lucide-react'
 import MagneticButton from './MagneticButton'
 import FloatingShapes from './FloatingShapes'
 
 export default function Hero() {
+    const { scrollY } = useScroll()
+    const y = useTransform(scrollY, [0, 1000], [0, 250])
+
     return (
         <section className="min-h-screen flex flex-col justify-between relative pt-32 pb-12 overflow-hidden bg-transparent">
             <FloatingShapes variant="hero" />
@@ -38,17 +41,19 @@ export default function Hero() {
                 <div 
                     className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-20"
                 >
-                    <motion.h1
-                        className="text-[15vw] md:text-[13vw] font-display font-bold leading-[0.8] text-accent/20 tracking-wider text-center uppercase"
-                        style={{ fontFamily: 'var(--font-general-sans)' }}
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        NITI
-                        <br />
-                        KANOONGO
-                    </motion.h1>
+                    <motion.div style={{ y }} className="w-full flex justify-center">
+                        <motion.h1
+                            className="text-[15vw] md:text-[13vw] font-display font-bold leading-[0.8] text-accent/20 tracking-wider text-center uppercase"
+                            style={{ fontFamily: 'var(--font-general-sans)' }}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            NITI
+                            <br />
+                            KANOONGO
+                        </motion.h1>
+                    </motion.div>
                 </div>
 
                 {/* Left Floating Badge: Greeting */}
