@@ -56,12 +56,15 @@ const images: DriftConfig[] = [
     },
 ]
 
-const statement = (
-    <>
-        I don&apos;t just prototype ideas — I ship systems that hold up under{' '}
-        <span className="text-accent">real load, real data, real users.</span>
-    </>
-)
+// Word-level reveal config: each word lights up from muted to full color
+// across its own slice of scrollYProgress, before the image stack converges.
+const statementWords = [
+    "I", "don't", 'just', 'prototype', 'ideas', '—', 'I', 'ship',
+    'systems', 'that', 'hold', 'up', 'under', 'real', 'load,', 'real',
+    'data,', 'real', 'users.',
+].map((word, i) => ({ word, accent: i >= 13 }))
+
+const statementPlain = statementWords.map((w) => w.word).join(' ')
 
 export default function ScrollStatement() {
     return (
@@ -96,6 +99,39 @@ function DriftImage({
     )
 }
 
+const REVEAL_WINDOW = 0.55 // portion of scroll progress spent revealing words
+
+function RevealWord({
+    word,
+    accent,
+    index,
+    total,
+    scrollYProgress,
+}: {
+    word: string
+    accent: boolean
+    index: number
+    total: number
+    scrollYProgress: MotionValue<number>
+}) {
+    const segment = REVEAL_WINDOW / total
+    const start = index * segment
+    const end = Math.min(start + segment * 4, REVEAL_WINDOW + segment * 4)
+
+    const opacity = useTransform(scrollYProgress, [start, end], [0.16, 1])
+    const color = useTransform(
+        scrollYProgress,
+        [start, end],
+        ['rgba(255,255,255,0.16)', accent ? '#ED7A36' : '#FFFFFF']
+    )
+
+    return (
+        <motion.span style={{ opacity, color }} className="inline-block mr-[0.28em]">
+            {word}
+        </motion.span>
+    )
+}
+
 function DesktopScrollStatement() {
     const containerRef = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({
@@ -104,7 +140,7 @@ function DesktopScrollStatement() {
     })
 
     const textScale = useTransform(scrollYProgress, [0, 1], [1, 0.88])
-    const textOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.55, 0.3])
+    const textOpacity = useTransform(scrollYProgress, [0, 0.6, 0.85, 1], [1, 1, 0.6, 0.35])
     const imagesOpacity = useTransform(scrollYProgress, [0, 0.15, 1], [0, 1, 1])
 
     return (
@@ -114,12 +150,21 @@ function DesktopScrollStatement() {
             style={{ height: '280vh' }}
         >
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-                {/* Statement — sits behind the image stack (lower z-index) */}
+                {/* Statement — sits behind the image stack (lower z-index), words light up as you scroll */}
                 <motion.p
                     style={{ scale: textScale, opacity: textOpacity }}
-                    className="relative z-10 max-w-4xl px-10 text-center font-display font-semibold text-[clamp(2rem,4.2vw,3.75rem)] leading-[1.15] text-foreground text-balance"
+                    className="relative z-10 max-w-4xl px-10 text-center font-display font-semibold text-[clamp(2rem,4.2vw,3.75rem)] leading-[1.15]"
                 >
-                    {statement}
+                    {statementWords.map((w, i) => (
+                        <RevealWord
+                            key={i}
+                            word={w.word}
+                            accent={w.accent}
+                            index={i}
+                            total={statementWords.length}
+                            scrollYProgress={scrollYProgress}
+                        />
+                    ))}
                 </motion.p>
 
                 {/* Project screenshots drift in over the statement as you scroll */}
@@ -144,7 +189,10 @@ function MobileStatement() {
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="font-display font-semibold text-[clamp(1.75rem,7vw,2.5rem)] leading-snug text-foreground text-balance mb-10"
                 >
-                    {statement}
+                    {statementWords.slice(0, 13).map((w) => w.word).join(' ')}{' '}
+                    <span className="text-accent">
+                        {statementWords.slice(13).map((w) => w.word).join(' ')}
+                    </span>
                 </motion.p>
 
                 <motion.div
