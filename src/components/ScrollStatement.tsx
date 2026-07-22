@@ -33,6 +33,27 @@ const images: DriftConfig[] = [
         start: { x: '-40vw', y: '40vh', scale: 0.5, rotate: 8 },
         end: { x: '-27vw', y: '24vh', scale: 0.95, rotate: -4 },
     },
+    {
+        src: '/samanvay.png',
+        alt: 'Samanvay — Two-Way Sign Language Interpreter',
+        size: 'w-[280px] lg:w-[340px]',
+        start: { x: '44vw', y: '38vh', scale: 0.45, rotate: -8 },
+        end: { x: '29vw', y: '23vh', scale: 1, rotate: 6 },
+    },
+    {
+        src: '/snaplens.png',
+        alt: 'SnapLens — AI Screenshot Intelligence',
+        size: 'w-[240px] lg:w-[300px]',
+        start: { x: '4vw', y: '-46vh', scale: 0.4, rotate: 6 },
+        end: { x: '1vw', y: '-32vh', scale: 0.85, rotate: -3 },
+    },
+    {
+        src: '/patent-express.png',
+        alt: 'Patent Express — UX Redesign',
+        size: 'w-[220px] lg:w-[280px]',
+        start: { x: '-2vw', y: '46vh', scale: 0.4, rotate: -6 },
+        end: { x: '2vw', y: '32vh', scale: 0.85, rotate: 4 },
+    },
 ]
 
 const statement = (
@@ -90,7 +111,7 @@ function DesktopScrollStatement() {
         <section
             ref={containerRef}
             className="relative bg-transparent hidden md:block"
-            style={{ height: '260vh' }}
+            style={{ height: '280vh' }}
         >
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
                 {/* Statement — sits behind the image stack (lower z-index) */}
