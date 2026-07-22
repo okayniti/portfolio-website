@@ -20,6 +20,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <head>
+                <link rel="preconnect" href="https://api.fontshare.com" />
+                <link
+                    rel="stylesheet"
+                    href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@300,400,500,600,700&display=swap"
+                />
+            </head>
             <body className="min-h-screen bg-background text-foreground antialiased">
                 {children}
             </body>
