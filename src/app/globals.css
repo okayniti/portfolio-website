@@ -9,8 +9,9 @@
 
 @layer base {
   :root {
-    --font-inter: 'General Sans', 'Inter', system-ui, sans-serif;
-    --font-general-sans: 'Clash Display', 'General Sans', sans-serif;
+    --font-inter: var(--font-inter-tight), system-ui, sans-serif;
+    --font-general-sans: var(--font-zalando-expanded), var(--font-inter-tight), sans-serif;
+    --font-script: var(--font-caveat), cursive;
   }
 
   html {
@@ -65,7 +66,7 @@
 
   /* Section label (small tag above headings) */
   .section-label {
-    @apply text-label uppercase tracking-widest text-accent flex items-center gap-2 mb-4;
+    @apply text-label uppercase tracking-widest text-accent flex items-center gap-2 mb-4 font-mono;
   }
 
   .section-label::before {
@@ -111,7 +112,7 @@
 
   /* Technology pill/tag */
   .tech-pill {
-    @apply px-3.5 py-1.5 text-caption bg-card text-foreground-muted
+    @apply px-3.5 py-1.5 text-caption font-mono bg-card text-foreground-muted
            rounded-full border border-border whitespace-nowrap
            transition-all duration-300;
   }
