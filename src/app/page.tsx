@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
+import ScrollStatement from '@/components/ScrollStatement'
 import About from '@/components/About'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
@@ -15,6 +16,7 @@ export default function Home() {
 
             <main>
                 <Hero />
+                <ScrollStatement />
                 <About />
                 <Projects />
                 <Skills />
