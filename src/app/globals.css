@@ -9,8 +9,9 @@
 
 @layer base {
   :root {
-    --font-inter: var(--font-inter-tight), system-ui, sans-serif;
-    --font-general-sans: var(--font-zalando-expanded), var(--font-inter-tight), sans-serif;
+    --font-apple: -apple-system, BlinkMacSystemFont, var(--font-inter-tight), 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-inter: var(--font-apple);
+    --font-general-sans: var(--font-apple);
     --font-script: var(--font-caveat), cursive;
   }
 

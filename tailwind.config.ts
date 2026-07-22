@@ -29,7 +29,7 @@ const config: Config = {
                 sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
                 display: ['var(--font-general-sans)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
                 script: ['var(--font-script)', 'cursive'],
-                mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
+                mono: ['ui-monospace', '-apple-system', 'SFMono-Regular', 'var(--font-geist-mono)', 'Menlo', 'Consolas', 'monospace'],
             },
             fontSize: {
                 'display-xl': ['clamp(3rem, 6vw, 5.5rem)', { lineHeight: '1.0', fontWeight: '700', letterSpacing: '0.02em' }],
