@@ -13,11 +13,12 @@ interface Highlight {
 
 interface Stop {
     id: string
-    tag: string
+    title: string
     tagRotate: number
     x: number
     y: number
     tagY: number
+    titleAbove: boolean
     role: string
     company: string
     period: string
@@ -25,14 +26,30 @@ interface Stop {
     highlights?: Highlight[]
 }
 
+// Ordered latest-first. Title/arrow direction per stop: down, up, up, down.
 const stops: Stop[] = [
     {
-        id: 'mun',
-        tag: 'led',
-        tagRotate: -6,
+        id: 'covisionai',
+        title: 'AI/ML Intern',
+        tagRotate: 5,
         x: 150,
         y: 300,
         tagY: 388,
+        titleAbove: false,
+        role: 'AI/ML Intern',
+        company: 'CovisionAI — Pune, India',
+        period: 'May 2026 – Aug 2026',
+        description:
+            'Designed and built a Python-based benchmarking framework to evaluate 3 frontier video generation models (Seedance, Kling, Runway) across quality, latency, temporal consistency, and prompt-adherence; findings directly informed production model selection. Engineered robust API integration layers and automated test harnesses across 100+ generation configurations, reducing manual evaluation overhead by 40%.',
+    },
+    {
+        id: 'mun',
+        title: 'MUN Chair',
+        tagRotate: -6,
+        x: 553,
+        y: 140,
+        tagY: 44,
+        titleAbove: true,
         role: 'Executive Board Member — Chairperson / Vice Chair',
         company: 'Model United Nations circuit',
         period: '2021 – 2025',
@@ -50,25 +67,13 @@ const stops: Stop[] = [
         ],
     },
     {
-        id: 'hcltechbee',
-        tag: 'started coding',
-        tagRotate: 5,
-        x: 553,
-        y: 130,
-        tagY: 44,
-        role: 'Selected Candidate, HCL TechBee',
-        company: 'HCLTech',
-        period: 'Dec 2022 – Jan 2023',
-        description:
-            "Selected for HCLTech's exclusive post-Class XII tech career program — a structured track pairing 12 months of training with a path to full-time placement, alongside the option to pursue a degree from BITS Pilani.",
-    },
-    {
         id: 'aspirant',
-        tag: 'shipped it',
-        tagRotate: -5,
+        title: 'Full-Stack Dev',
+        tagRotate: 6,
         x: 967,
-        y: 300,
-        tagY: 388,
+        y: 140,
+        tagY: 44,
+        titleAbove: true,
         role: 'Website Developer & Reporting Manager',
         company: 'Aspirant India Initiative — Remote',
         period: 'Mar 2025 – Jul 2025',
@@ -76,17 +81,18 @@ const stops: Stop[] = [
             'Architected and deployed a production web platform serving 40,000+ students across 500+ institutions. Owned the full system lifecycle from design through post-launch, leading a 3-developer team via sprint planning and code reviews. Shipped features for 9 national SDG summit events across 5 months with zero production incidents.',
     },
     {
-        id: 'covisionai',
-        tag: 'going deeper',
-        tagRotate: 6,
+        id: 'hcltechbee',
+        title: 'HCL TechBee',
+        tagRotate: -5,
         x: 1380,
-        y: 150,
-        tagY: 58,
-        role: 'AI/ML Intern',
-        company: 'CovisionAI — Pune, India',
-        period: 'May 2026 – Aug 2026',
+        y: 300,
+        tagY: 388,
+        titleAbove: false,
+        role: 'Selected Candidate, HCL TechBee',
+        company: 'HCLTech',
+        period: 'Dec 2022 – Jan 2023',
         description:
-            'Designed and built a Python-based benchmarking framework to evaluate 3 frontier video generation models (Seedance, Kling, Runway) across quality, latency, temporal consistency, and prompt-adherence; findings directly informed production model selection. Engineered robust API integration layers and automated test harnesses across 100+ generation configurations, reducing manual evaluation overhead by 40%.',
+            "Selected for HCLTech's exclusive post-Class XII tech career program — a structured track pairing 12 months of training with a path to full-time placement, alongside the option to pursue a degree from BITS Pilani.",
     },
 ]
 
@@ -95,6 +101,7 @@ const CANVAS_H = 460
 const ROAD_COLOR = 'rgba(255,255,255,0.28)'
 const ACCENT = '#ED7A36'
 const ACCENT_DEEP = '#DD4D06'
+const ARROW_COLOR = 'rgba(255,255,255,0.55)'
 
 const generator = rough.generator()
 
@@ -114,7 +121,8 @@ const roadDrawable = generator.curve(
 )
 const roadPaths = toSvgPaths(roadDrawable)
 
-// Scribble-filled circle marker + small arrow (with hand-drawn arrowhead) per stop.
+// Scribble-filled circle marker per stop, plus an arrow running FROM the
+// node OUT to its title (tail at the node, arrowhead at the title).
 const nodePaths: Record<string, PathInfo[]> = {}
 const arrowPaths: Record<string, PathInfo[]> = {}
 
@@ -132,35 +140,33 @@ stops.forEach((stop, i) => {
         })
     )
 
-    const pointsUp = stop.tagY < stop.y // arrow travels downward into the node
-    const midX = stop.x + (pointsUp ? -14 : 14)
-    const midY = (stop.tagY + stop.y) / 2
-    const tailY = pointsUp ? stop.tagY + 26 : stop.tagY - 26
-    const headY = pointsUp ? stop.y - 34 : stop.y + 34
+    const dir = stop.titleAbove ? -1 : 1 // travel direction: -1 = upward, +1 = downward
+    const tailY = stop.y + dir * 34
+    const headY = stop.tagY - dir * 24
+    const midX = stop.x + (i % 2 === 0 ? -14 : 14)
+    const midY = (tailY + headY) / 2
 
     const arrowLine = generator.curve(
         [
-            [stop.x + (pointsUp ? -30 : 30), tailY],
+            [stop.x, tailY],
             [midX, midY],
             [stop.x, headY],
         ],
-        { stroke: 'rgba(255,255,255,0.55)', strokeWidth: 2, roughness: 1.6, seed: 200 + i } satisfies Options
+        { stroke: ARROW_COLOR, strokeWidth: 2, roughness: 1.6, seed: 200 + i } satisfies Options
     )
-    const headDir = pointsUp ? 1 : -1
-    const arrowHeadA = generator.line(
-        stop.x,
-        headY,
-        stop.x - 7,
-        headY - 9 * headDir,
-        { stroke: 'rgba(255,255,255,0.55)', strokeWidth: 2, roughness: 1.6, seed: 300 + i } satisfies Options
-    )
-    const arrowHeadB = generator.line(
-        stop.x,
-        headY,
-        stop.x + 7,
-        headY - 9 * headDir,
-        { stroke: 'rgba(255,255,255,0.55)', strokeWidth: 2, roughness: 1.6, seed: 400 + i } satisfies Options
-    )
+    const backY = headY - dir * 9
+    const arrowHeadA = generator.line(stop.x, headY, stop.x - 7, backY, {
+        stroke: ARROW_COLOR,
+        strokeWidth: 2,
+        roughness: 1.6,
+        seed: 300 + i,
+    } satisfies Options)
+    const arrowHeadB = generator.line(stop.x, headY, stop.x + 7, backY, {
+        stroke: ARROW_COLOR,
+        strokeWidth: 2,
+        roughness: 1.6,
+        seed: 400 + i,
+    } satisfies Options)
 
     arrowPaths[stop.id] = [...toSvgPaths(arrowLine), ...toSvgPaths(arrowHeadA), ...toSvgPaths(arrowHeadB)]
 })
@@ -216,7 +222,7 @@ export default function Experience() {
                     </motion.h2>
                 </div>
 
-                {/* Hand-drawn map — hover (or tap) a stop to see its story */}
+                {/* Hand-drawn map — hover (or tap) a title to see its story */}
                 <motion.div
                     ref={mapRef}
                     initial={{ opacity: 0, y: 30 }}
@@ -234,15 +240,29 @@ export default function Experience() {
                             {roadPaths.map((p, i) => (
                                 <path key={`road-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" strokeLinecap="round" />
                             ))}
-                            {stops.map((stop) => (
+                            {stops.map((stop, i) => (
                                 <g key={stop.id}>
-                                    {arrowPaths[stop.id].map((p, i) => (
-                                        <path key={`arrow-${stop.id}-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" strokeLinecap="round" />
+                                    {arrowPaths[stop.id].map((p, j) => (
+                                        <motion.path
+                                            key={`arrow-${stop.id}-${j}`}
+                                            d={p.d}
+                                            stroke={p.stroke}
+                                            strokeWidth={p.strokeWidth}
+                                            fill="none"
+                                            strokeLinecap="round"
+                                            initial={{ pathLength: 0 }}
+                                            animate={mapInView ? { pathLength: 1 } : { pathLength: 0 }}
+                                            transition={{
+                                                duration: j === 0 ? 0.6 : 0.25,
+                                                delay: i * 0.18 + (j === 0 ? 0.3 : 0.9),
+                                                ease: 'easeInOut',
+                                            }}
+                                        />
                                     ))}
-                                    {nodePaths[stop.id].map((p, i) => (
-                                        <path key={`node-${stop.id}-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill={p.fill || 'none'} />
+                                    {nodePaths[stop.id].map((p, j) => (
+                                        <path key={`node-${stop.id}-${j}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill={p.fill || 'none'} />
                                     ))}
-                                    {/* Invisible hit target — larger than the marker, drives hover/tap */}
+                                    {/* Invisible hit target on the node — bonus hover area alongside the title */}
                                     <circle
                                         cx={stop.x}
                                         cy={stop.y}
@@ -257,8 +277,8 @@ export default function Experience() {
                             ))}
                         </svg>
 
-                        {/* Tag labels, absolutely positioned over the map */}
-                        <div className="relative -mt-[460px] pointer-events-none" style={{ height: CANVAS_H }}>
+                        {/* Title labels, absolutely positioned over the map — hovering one reveals its story */}
+                        <div className="relative -mt-[460px]" style={{ height: CANVAS_H }}>
                             {stops.map((stop) => (
                                 <span
                                     key={stop.id}
@@ -267,18 +287,21 @@ export default function Experience() {
                                         top: stop.tagY,
                                         transform: `translate(-50%, -50%) rotate(${stop.tagRotate}deg)`,
                                     }}
-                                    className={`absolute font-script text-2xl whitespace-nowrap transition-colors ${activeId === stop.id ? 'text-white' : 'text-accent'
+                                    onMouseEnter={() => open(stop.id)}
+                                    onMouseLeave={scheduleClose}
+                                    onClick={() => toggle(stop.id)}
+                                    className={`absolute font-script text-2xl whitespace-nowrap cursor-pointer transition-colors ${activeId === stop.id ? 'text-white' : 'text-accent hover:text-white'
                                         }`}
                                 >
-                                    {stop.tag}
+                                    {stop.title}
                                 </span>
                             ))}
                         </div>
                     </div>
                 </motion.div>
 
-                <p className="text-caption text-foreground-muted mt-2 mb-6 md:hidden">← swipe the map, tap a stop for its story →</p>
-                <p className="text-caption text-foreground-muted mt-2 mb-6 hidden md:block">Hover a stop on the map to see its story</p>
+                <p className="text-caption text-foreground-muted mt-2 mb-6 md:hidden">← swipe the map, tap a title for its story →</p>
+                <p className="text-caption text-foreground-muted mt-2 mb-6 hidden md:block">Hover a title on the map to see its story</p>
 
                 {/* Detail panel — drops down under the map for whichever stop is active */}
                 <div
