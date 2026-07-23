@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
 import rough from 'roughjs/bin/rough'
 import type { Options, PathInfo } from 'roughjs/bin/core'
 
@@ -173,6 +172,23 @@ export default function Experience() {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInView = useInView(mapRef, { once: true, margin: '-80px' })
 
+    const [activeId, setActiveId] = useState<string | null>(null)
+    const closeTimer = useRef<ReturnType<typeof setTimeout>>()
+
+    function open(id: string) {
+        clearTimeout(closeTimer.current)
+        setActiveId(id)
+    }
+    function scheduleClose() {
+        closeTimer.current = setTimeout(() => setActiveId(null), 200)
+    }
+    function toggle(id: string) {
+        clearTimeout(closeTimer.current)
+        setActiveId((v) => (v === id ? null : id))
+    }
+
+    const activeStop = stops.find((s) => s.id === activeId) ?? null
+
     return (
         <section id="experience" className="section-padding relative">
             <div className="container-content">
@@ -200,7 +216,7 @@ export default function Experience() {
                     </motion.h2>
                 </div>
 
-                {/* Hand-drawn map + stop cards, sharing one horizontal scroll track */}
+                {/* Hand-drawn map — hover (or tap) a stop to see its story */}
                 <motion.div
                     ref={mapRef}
                     initial={{ opacity: 0, y: 30 }}
@@ -209,13 +225,11 @@ export default function Experience() {
                     className="relative -mx-6 md:-mx-10 lg:-mx-16 overflow-x-auto pb-4"
                 >
                     <div className="px-6 md:px-10 lg:px-16" style={{ width: 'max-content' }}>
-                        {/* Map */}
                         <svg
                             viewBox={`0 0 ${CANVAS_W} ${CANVAS_H}`}
                             width={CANVAS_W}
                             height={CANVAS_H}
                             className="block select-none"
-                            aria-hidden="true"
                         >
                             {roadPaths.map((p, i) => (
                                 <path key={`road-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" strokeLinecap="round" />
@@ -228,6 +242,17 @@ export default function Experience() {
                                     {nodePaths[stop.id].map((p, i) => (
                                         <path key={`node-${stop.id}-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill={p.fill || 'none'} />
                                     ))}
+                                    {/* Invisible hit target — larger than the marker, drives hover/tap */}
+                                    <circle
+                                        cx={stop.x}
+                                        cy={stop.y}
+                                        r={56}
+                                        fill="transparent"
+                                        style={{ cursor: 'pointer' }}
+                                        onMouseEnter={() => open(stop.id)}
+                                        onMouseLeave={scheduleClose}
+                                        onClick={() => toggle(stop.id)}
+                                    />
                                 </g>
                             ))}
                         </svg>
@@ -242,75 +267,58 @@ export default function Experience() {
                                         top: stop.tagY,
                                         transform: `translate(-50%, -50%) rotate(${stop.tagRotate}deg)`,
                                     }}
-                                    className="absolute font-script text-accent text-2xl whitespace-nowrap"
+                                    className={`absolute font-script text-2xl whitespace-nowrap transition-colors ${activeId === stop.id ? 'text-white' : 'text-accent'
+                                        }`}
                                 >
                                     {stop.tag}
                                 </span>
                             ))}
                         </div>
-
-                        {/* Stop cards */}
-                        <div className="flex gap-6 pt-2">
-                            {stops.map((stop) => (
-                                <StopCard key={stop.id} stop={stop} />
-                            ))}
-                        </div>
                     </div>
                 </motion.div>
 
-                <p className="text-caption text-foreground-muted mt-4 md:hidden">← swipe to see the full journey →</p>
-            </div>
-        </section>
-    )
-}
+                <p className="text-caption text-foreground-muted mt-2 mb-6 md:hidden">← swipe the map, tap a stop for its story →</p>
+                <p className="text-caption text-foreground-muted mt-2 mb-6 hidden md:block">Hover a stop on the map to see its story</p>
 
-function StopCard({ stop }: { stop: Stop }) {
-    const [expanded, setExpanded] = useState(false)
-
-    return (
-        <div className="w-[320px] shrink-0 premium-card !p-6" onMouseEnter={() => stop.highlights && setExpanded(true)}>
-            <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit inline-block mb-3">
-                {stop.period}
-            </span>
-            <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
-            <p className="text-body-sm text-foreground-muted font-medium mb-3">{stop.company}</p>
-            <p className="text-body-sm text-foreground-muted leading-relaxed">{stop.description}</p>
-
-            {stop.highlights && (
-                <div className="mt-4 pt-4 border-t border-border">
-                    <button
-                        onClick={() => setExpanded((v) => !v)}
-                        className="flex items-center gap-1.5 text-caption font-mono text-accent hover:text-white transition-colors"
-                    >
-                        {expanded ? 'Hide conferences' : 'View recent conferences'}
-                        <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                            <ChevronDown size={13} />
-                        </motion.span>
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                        {expanded && (
+                {/* Detail panel — drops down under the map for whichever stop is active */}
+                <div
+                    className="min-h-[190px]"
+                    onMouseEnter={() => activeId && open(activeId)}
+                    onMouseLeave={scheduleClose}
+                >
+                    <AnimatePresence mode="wait">
+                        {activeStop && (
                             <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                                className="overflow-hidden"
+                                key={activeStop.id}
+                                initial={{ opacity: 0, y: -16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                className="premium-card !p-6 md:!p-8 max-w-2xl"
                             >
-                                <ul className="mt-3 space-y-2.5 max-h-56 overflow-y-auto pr-1">
-                                    {stop.highlights.map((h) => (
-                                        <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
-                                            <span className="text-foreground font-medium">{h.role}</span>
-                                            <span className="text-foreground-muted"> — {h.event}</span>
-                                            <span className="text-foreground-muted font-mono"> · {h.when}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit inline-block mb-3">
+                                    {activeStop.period}
+                                </span>
+                                <h3 className="text-lg font-semibold text-foreground leading-snug">{activeStop.role}</h3>
+                                <p className="text-body-sm text-foreground-muted font-medium mb-3">{activeStop.company}</p>
+                                <p className="text-body-sm text-foreground-muted leading-relaxed">{activeStop.description}</p>
+
+                                {activeStop.highlights && (
+                                    <ul className="mt-4 pt-4 border-t border-border space-y-2 max-h-40 overflow-y-auto pr-1">
+                                        {activeStop.highlights.map((h) => (
+                                            <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
+                                                <span className="text-foreground font-medium">{h.role}</span>
+                                                <span className="text-foreground-muted"> — {h.event}</span>
+                                                <span className="text-foreground-muted font-mono"> · {h.when}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
-            )}
-        </div>
+            </div>
+        </section>
     )
 }
