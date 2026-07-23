@@ -64,7 +64,7 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.5 }}
                 >
                     <p className="text-body-sm text-foreground-muted font-medium tracking-wide">
-                        Hi, I am
+                        Hi, I am an
                     </p>
                     <p className="text-sm font-display text-accent font-semibold uppercase tracking-wider">
                         ✦ AI/ML Developer
