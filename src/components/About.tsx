@@ -38,7 +38,19 @@ export default function About() {
             <div className="container-content">
                 <SectionHeader
                     label="About Me"
-                    heading="I blend AI & Machine Learning with Full-Stack Development to build systems that actually work"
+                    heading={
+                        <>
+                            I blend{' '}
+                            <span className="font-script text-accent text-[1.15em] font-normal -rotate-2 inline-block">
+                                AI &amp; Machine Learning
+                            </span>{' '}
+                            with{' '}
+                            <span className="font-script text-accent text-[1.15em] font-normal rotate-1 inline-block">
+                                Full-Stack Development
+                            </span>{' '}
+                            to build systems that actually work
+                        </>
+                    }
                 />
 
                 <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">

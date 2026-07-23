@@ -19,7 +19,14 @@ export default function Projects() {
             <div className="container-content">
                 <SectionHeader
                     label="Some Recent Projects"
-                    heading="Selected Work That Delivers Results"
+                    heading={
+                        <>
+                            Selected Work That{' '}
+                            <span className="font-script text-accent text-[1.15em] font-normal -rotate-2 inline-block">
+                                Delivers Results
+                            </span>
+                        </>
+                    }
                 />
 
                 {/* Projects */}

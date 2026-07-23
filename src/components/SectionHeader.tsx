@@ -5,7 +5,7 @@ import { motion, useInView } from 'framer-motion'
 
 interface SectionHeaderProps {
     label: string
-    heading: string
+    heading: React.ReactNode
     description?: string
     align?: 'left' | 'center'
     className?: string
