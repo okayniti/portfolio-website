@@ -275,10 +275,10 @@ export default function Experience() {
 
                 <p className="text-caption text-foreground-muted mt-2 mb-10 md:hidden">← swipe to see the full map →</p>
 
-                {/* Details — same order as the map, latest first */}
+                {/* Details — same order as the map, latest first: 2 up, 2 down */}
                 <motion.div
                     ref={listRef}
-                    className="space-y-6 max-w-3xl"
+                    className="grid sm:grid-cols-2 gap-5 md:gap-6 items-start max-w-4xl"
                     initial="hidden"
                     animate={listInView ? 'visible' : 'hidden'}
                     variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
@@ -301,21 +301,20 @@ function ExperienceCard({ stop }: { stop: Stop }) {
                 hidden: { opacity: 0, y: 24 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
             }}
-            className="premium-card !p-6 md:!p-8"
+            className="premium-card !p-6 md:!p-8 !border-white/[0.14] h-full flex flex-col"
         >
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                <div>
-                    <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
-                    <p className="text-body-sm text-foreground-muted font-medium">{stop.company}</p>
-                </div>
-                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit">
+            <div className="flex items-start justify-between gap-2 mb-4">
+                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-white/10 whitespace-nowrap w-fit">
                     {stop.period}
                 </span>
+                <span className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5" aria-hidden="true" />
             </div>
+            <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
+            <p className="text-body-sm text-foreground-muted font-medium mb-3">{stop.company}</p>
             <p className="text-body-sm text-foreground-muted leading-relaxed">{stop.description}</p>
 
             {stop.highlights && (
-                <div className="mt-4 pt-4 border-t border-border">
+                <div className="mt-4 pt-4 border-t border-white/10">
                     <button
                         onClick={() => setExpanded((v) => !v)}
                         className="flex items-center gap-1.5 text-caption font-mono text-accent hover:text-white transition-colors"
