@@ -172,6 +172,40 @@ stops.forEach((stop, i) => {
     arrowPaths[stop.id] = [...toSvgPaths(arrowLine), ...toSvgPaths(arrowHeadA), ...toSvgPaths(arrowHeadB)]
 })
 
+// Minimalist hand-drawn doodle cluster for the empty space beside the grid —
+// a sparkle, a loose ring, and a short squiggle underline.
+const SPARKLE_PATH = 'M18 0 C19 10,26 17,36 18 C26 19,19 26,18 36 C17 26,10 19,0 18 C10 17,17 10,18 0 Z'
+const sparklePaths = toSvgPaths(
+    generator.path(SPARKLE_PATH, {
+        fill: ACCENT,
+        fillStyle: 'hachure',
+        hachureGap: 3,
+        stroke: ACCENT_DEEP,
+        strokeWidth: 1.6,
+        roughness: 2,
+        seed: 501,
+    })
+)
+const ringPaths = toSvgPaths(
+    generator.circle(0, 0, 46, {
+        stroke: 'rgba(255,255,255,0.35)',
+        strokeWidth: 1.8,
+        roughness: 2.4,
+        seed: 502,
+    })
+)
+const squigglePaths = toSvgPaths(
+    generator.curve(
+        [
+            [-30, 0],
+            [-10, -8],
+            [10, 8],
+            [30, -4],
+        ],
+        { stroke: 'rgba(255,255,255,0.3)', strokeWidth: 1.8, roughness: 1.8, seed: 503 } satisfies Options
+    )
+)
+
 export default function Experience() {
     const headerRef = useRef<HTMLDivElement>(null)
     const headerInView = useInView(headerRef, { once: true, margin: '-60px' })
@@ -264,7 +298,7 @@ export default function Experience() {
                                         top: stop.tagY,
                                         transform: `translate(-50%, -50%) rotate(${stop.tagRotate}deg)`,
                                     }}
-                                    className="absolute font-script text-2xl whitespace-nowrap text-accent"
+                                    className="absolute font-script text-2xl whitespace-nowrap text-white"
                                 >
                                     {stop.title}
                                 </span>
@@ -275,20 +309,63 @@ export default function Experience() {
 
                 <p className="text-caption text-foreground-muted mt-2 mb-10 md:hidden">← swipe to see the full map →</p>
 
-                {/* Details — same order as the map, latest first: 2 up, 2 down */}
-                <motion.div
-                    ref={listRef}
-                    className="grid sm:grid-cols-2 gap-5 md:gap-6 items-start max-w-4xl"
-                    initial="hidden"
-                    animate={listInView ? 'visible' : 'hidden'}
-                    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
-                >
-                    {stops.map((stop) => (
-                        <ExperienceCard key={stop.id} stop={stop} />
-                    ))}
-                </motion.div>
+                <div className="flex items-start gap-10">
+                    {/* Details — same order as the map, latest first: 2 up, 2 down */}
+                    <motion.div
+                        ref={listRef}
+                        className="grid sm:grid-cols-2 gap-5 md:gap-6 items-start max-w-4xl flex-1"
+                        initial="hidden"
+                        animate={listInView ? 'visible' : 'hidden'}
+                        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+                    >
+                        {stops.map((stop) => (
+                            <ExperienceCard key={stop.id} stop={stop} />
+                        ))}
+                    </motion.div>
+
+                    <JourneyDoodles inView={listInView} />
+                </div>
             </div>
         </section>
+    )
+}
+
+function JourneyDoodles({ inView }: { inView: boolean }) {
+    return (
+        <div className="hidden lg:flex flex-col items-center gap-16 w-32 shrink-0 pt-10" aria-hidden="true">
+            <motion.svg
+                width="36" height="36" viewBox="0 0 36 36"
+                initial={{ opacity: 0, scale: 0.6, rotate: -15 }}
+                animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+                {sparklePaths.map((p, i) => (
+                    <path key={i} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill={p.fill || 'none'} />
+                ))}
+            </motion.svg>
+
+            <motion.svg
+                width="60" height="60" viewBox="-30 -30 60 60"
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+                {ringPaths.map((p, i) => (
+                    <path key={i} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" />
+                ))}
+            </motion.svg>
+
+            <motion.svg
+                width="60" height="16" viewBox="-30 -8 60 16"
+                initial={{ opacity: 0, pathLength: 0 }}
+                animate={inView ? { opacity: 1, pathLength: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.7, ease: 'easeInOut' }}
+            >
+                {squigglePaths.map((p, i) => (
+                    <motion.path key={i} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" strokeLinecap="round" />
+                ))}
+            </motion.svg>
+        </div>
     )
 }
 
