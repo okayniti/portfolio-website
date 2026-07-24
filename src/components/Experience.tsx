@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 import rough from 'roughjs/bin/rough'
 import type { Options, PathInfo } from 'roughjs/bin/core'
 
@@ -121,8 +122,8 @@ const roadDrawable = generator.curve(
 )
 const roadPaths = toSvgPaths(roadDrawable)
 
-// Scribble-filled circle marker per stop, plus an arrow running FROM the
-// node OUT to its title (tail at the node, arrowhead at the title).
+// Scribble-filled circle marker per stop, plus a decorative arrow running
+// FROM the node OUT to its title.
 const nodePaths: Record<string, PathInfo[]> = {}
 const arrowPaths: Record<string, PathInfo[]> = {}
 
@@ -171,29 +172,6 @@ stops.forEach((stop, i) => {
     arrowPaths[stop.id] = [...toSvgPaths(arrowLine), ...toSvgPaths(arrowHeadA), ...toSvgPaths(arrowHeadB)]
 })
 
-const POPOVER_W = 290
-
-// Keeps the popover inside the canvas horizontally (edge nodes anchor to
-// their inner side instead of centering), and flips it above/below the
-// node depending on which side its title left vacant.
-function popoverStyle(stop: Stop): React.CSSProperties {
-    const halfW = POPOVER_W / 2
-    let translateX = '-50%'
-    let left = stop.x
-    if (stop.x - halfW < 10) {
-        translateX = '0%'
-        left = stop.x - 24
-    } else if (stop.x + halfW > CANVAS_W - 10) {
-        translateX = '-100%'
-        left = stop.x + 24
-    }
-
-    if (stop.titleAbove) {
-        return { left, top: stop.y + 60, transform: `translateX(${translateX})` }
-    }
-    return { left, top: stop.y - 60, transform: `translateX(${translateX}) translateY(-100%)` }
-}
-
 export default function Experience() {
     const headerRef = useRef<HTMLDivElement>(null)
     const headerInView = useInView(headerRef, { once: true, margin: '-60px' })
@@ -201,22 +179,8 @@ export default function Experience() {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInView = useInView(mapRef, { once: true, margin: '-80px' })
 
-    const [activeId, setActiveId] = useState<string | null>(null)
-    const closeTimer = useRef<ReturnType<typeof setTimeout>>()
-
-    function open(id: string) {
-        clearTimeout(closeTimer.current)
-        setActiveId(id)
-    }
-    function scheduleClose() {
-        closeTimer.current = setTimeout(() => setActiveId(null), 200)
-    }
-    function toggle(id: string) {
-        clearTimeout(closeTimer.current)
-        setActiveId((v) => (v === id ? null : id))
-    }
-
-    const activeStop = stops.find((s) => s.id === activeId) ?? null
+    const listRef = useRef<HTMLDivElement>(null)
+    const listInView = useInView(listRef, { once: true, margin: '-60px' })
 
     return (
         <section id="experience" className="section-padding relative">
@@ -245,7 +209,7 @@ export default function Experience() {
                     </motion.h2>
                 </div>
 
-                {/* Hand-drawn map — hover (or tap) a title to see its story */}
+                {/* Hand-drawn map — purely illustrative, latest stop first */}
                 <motion.div
                     ref={mapRef}
                     initial={{ opacity: 0, y: 30 }}
@@ -259,6 +223,7 @@ export default function Experience() {
                             width={CANVAS_W}
                             height={CANVAS_H}
                             className="block select-none"
+                            aria-hidden="true"
                         >
                             {roadPaths.map((p, i) => (
                                 <path key={`road-${i}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill="none" strokeLinecap="round" />
@@ -285,23 +250,12 @@ export default function Experience() {
                                     {nodePaths[stop.id].map((p, j) => (
                                         <path key={`node-${stop.id}-${j}`} d={p.d} stroke={p.stroke} strokeWidth={p.strokeWidth} fill={p.fill || 'none'} />
                                     ))}
-                                    {/* Invisible hit target on the node — bonus hover area alongside the title */}
-                                    <circle
-                                        cx={stop.x}
-                                        cy={stop.y}
-                                        r={56}
-                                        fill="transparent"
-                                        style={{ cursor: 'pointer' }}
-                                        onMouseEnter={() => open(stop.id)}
-                                        onMouseLeave={scheduleClose}
-                                        onClick={() => toggle(stop.id)}
-                                    />
                                 </g>
                             ))}
                         </svg>
 
-                        {/* Title labels + hover popovers, absolutely positioned over the map */}
-                        <div className="relative -mt-[460px]" style={{ height: CANVAS_H }}>
+                        {/* Title labels, absolutely positioned over the map */}
+                        <div className="relative -mt-[460px] pointer-events-none" style={{ height: CANVAS_H }}>
                             {stops.map((stop) => (
                                 <span
                                     key={stop.id}
@@ -310,60 +264,91 @@ export default function Experience() {
                                         top: stop.tagY,
                                         transform: `translate(-50%, -50%) rotate(${stop.tagRotate}deg)`,
                                     }}
-                                    onMouseEnter={() => open(stop.id)}
-                                    onMouseLeave={scheduleClose}
-                                    onClick={() => toggle(stop.id)}
-                                    className={`absolute font-script text-2xl whitespace-nowrap cursor-pointer transition-colors ${activeId === stop.id ? 'text-white' : 'text-accent hover:text-white'
-                                        }`}
+                                    className="absolute font-script text-2xl whitespace-nowrap text-accent"
                                 >
                                     {stop.title}
                                 </span>
                             ))}
-
-                            {/* Detail popover — appears right next to the node, on whichever side
-                                (above/below) isn't already taken by the title, so it's always in
-                                view with zero page scroll needed. */}
-                            <AnimatePresence>
-                                {activeStop && (
-                                    <motion.div
-                                        key={activeStop.id}
-                                        onMouseEnter={() => open(activeStop.id)}
-                                        onMouseLeave={scheduleClose}
-                                        initial={{ opacity: 0, y: activeStop.titleAbove ? -10 : 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: activeStop.titleAbove ? -10 : 10 }}
-                                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                                        style={popoverStyle(activeStop)}
-                                        className="absolute z-30 w-[290px] premium-card !p-5"
-                                    >
-                                        <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit inline-block mb-2.5">
-                                            {activeStop.period}
-                                        </span>
-                                        <h3 className="text-base font-semibold text-foreground leading-snug">{activeStop.role}</h3>
-                                        <p className="text-caption text-foreground-muted font-medium mb-2.5">{activeStop.company}</p>
-                                        <p className="text-caption text-foreground-muted leading-relaxed">{activeStop.description}</p>
-
-                                        {activeStop.highlights && (
-                                            <ul className="mt-3 pt-3 border-t border-border space-y-1.5 max-h-32 overflow-y-auto pr-1">
-                                                {activeStop.highlights.map((h) => (
-                                                    <li key={`${h.event}-${h.when}`} className="text-[11px] leading-snug">
-                                                        <span className="text-foreground font-medium">{h.role}</span>
-                                                        <span className="text-foreground-muted"> — {h.event}</span>
-                                                        <span className="text-foreground-muted font-mono"> · {h.when}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
                         </div>
                     </div>
                 </motion.div>
 
-                <p className="text-caption text-foreground-muted mt-2 md:hidden">← swipe the map, tap a title for its story →</p>
-                <p className="text-caption text-foreground-muted mt-2 hidden md:block">Hover a title on the map to see its story</p>
+                <p className="text-caption text-foreground-muted mt-2 mb-10 md:hidden">← swipe to see the full map →</p>
+
+                {/* Details — same order as the map, latest first */}
+                <motion.div
+                    ref={listRef}
+                    className="space-y-6 max-w-3xl"
+                    initial="hidden"
+                    animate={listInView ? 'visible' : 'hidden'}
+                    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+                >
+                    {stops.map((stop) => (
+                        <ExperienceCard key={stop.id} stop={stop} />
+                    ))}
+                </motion.div>
             </div>
         </section>
+    )
+}
+
+function ExperienceCard({ stop }: { stop: Stop }) {
+    const [expanded, setExpanded] = useState(false)
+
+    return (
+        <motion.div
+            variants={{
+                hidden: { opacity: 0, y: 24 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+            }}
+            className="premium-card !p-6 md:!p-8"
+        >
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                <div>
+                    <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
+                    <p className="text-body-sm text-foreground-muted font-medium">{stop.company}</p>
+                </div>
+                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit">
+                    {stop.period}
+                </span>
+            </div>
+            <p className="text-body-sm text-foreground-muted leading-relaxed">{stop.description}</p>
+
+            {stop.highlights && (
+                <div className="mt-4 pt-4 border-t border-border">
+                    <button
+                        onClick={() => setExpanded((v) => !v)}
+                        className="flex items-center gap-1.5 text-caption font-mono text-accent hover:text-white transition-colors"
+                    >
+                        {expanded ? 'Hide conferences' : 'View recent conferences'}
+                        <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                            <ChevronDown size={13} />
+                        </motion.span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                        {expanded && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                className="overflow-hidden"
+                            >
+                                <ul className="mt-3 space-y-2.5 pr-1">
+                                    {stop.highlights.map((h) => (
+                                        <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
+                                            <span className="text-foreground font-medium">{h.role}</span>
+                                            <span className="text-foreground-muted"> — {h.event}</span>
+                                            <span className="text-foreground-muted font-mono"> · {h.when}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            )}
+        </motion.div>
     )
 }
