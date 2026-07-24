@@ -60,22 +60,14 @@ export default function About() {
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="image-frame aspect-[4/5] overflow-hidden sticky top-32 relative">
+                        <div className="image-frame aspect-[4/5] overflow-hidden sticky top-32">
                             <img
-                                src="/avatar.png"
+                                src="/avatar2.jpg"
                                 alt="Niti Kanoongo"
-                                className="w-full h-full object-cover object-center"
+                                className="w-full h-full object-cover"
+                                style={{ objectPosition: '46% 30%' }}
                                 loading="lazy"
                             />
-                            <div className="absolute bottom-4 right-4 w-[42%] aspect-square rounded-xl overflow-hidden border-2 border-white/20 shadow-xl rotate-2">
-                                <img
-                                    src="/avatar2.jpg"
-                                    alt="Niti Kanoongo speaking at a conference"
-                                    className="w-full h-full object-cover"
-                                    style={{ objectPosition: '46% 32%' }}
-                                    loading="lazy"
-                                />
-                            </div>
                         </div>
                     </motion.div>
 
