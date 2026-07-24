@@ -32,7 +32,7 @@ const stops: Stop[] = [
         id: 'covisionai',
         title: 'AI/ML Intern',
         tagRotate: 5,
-        x: 150,
+        x: 110,
         y: 300,
         tagY: 388,
         titleAbove: false,
@@ -46,7 +46,7 @@ const stops: Stop[] = [
         id: 'mun',
         title: 'MUN Chair',
         tagRotate: -6,
-        x: 553,
+        x: 400,
         y: 140,
         tagY: 44,
         titleAbove: true,
@@ -70,7 +70,7 @@ const stops: Stop[] = [
         id: 'aspirant',
         title: 'Full-Stack Dev',
         tagRotate: 6,
-        x: 967,
+        x: 690,
         y: 140,
         tagY: 44,
         titleAbove: true,
@@ -84,7 +84,7 @@ const stops: Stop[] = [
         id: 'hcltechbee',
         title: 'HCL TechBee',
         tagRotate: -5,
-        x: 1380,
+        x: 980,
         y: 300,
         tagY: 388,
         titleAbove: false,
@@ -96,7 +96,7 @@ const stops: Stop[] = [
     },
 ]
 
-const CANVAS_W = 1560
+const CANVAS_W = 1180
 const CANVAS_H = 460
 const ROAD_COLOR = 'rgba(255,255,255,0.28)'
 const ACCENT = '#ED7A36'
@@ -170,6 +170,29 @@ stops.forEach((stop, i) => {
 
     arrowPaths[stop.id] = [...toSvgPaths(arrowLine), ...toSvgPaths(arrowHeadA), ...toSvgPaths(arrowHeadB)]
 })
+
+const POPOVER_W = 290
+
+// Keeps the popover inside the canvas horizontally (edge nodes anchor to
+// their inner side instead of centering), and flips it above/below the
+// node depending on which side its title left vacant.
+function popoverStyle(stop: Stop): React.CSSProperties {
+    const halfW = POPOVER_W / 2
+    let translateX = '-50%'
+    let left = stop.x
+    if (stop.x - halfW < 10) {
+        translateX = '0%'
+        left = stop.x - 24
+    } else if (stop.x + halfW > CANVAS_W - 10) {
+        translateX = '-100%'
+        left = stop.x + 24
+    }
+
+    if (stop.titleAbove) {
+        return { left, top: stop.y + 60, transform: `translateX(${translateX})` }
+    }
+    return { left, top: stop.y - 60, transform: `translateX(${translateX}) translateY(-100%)` }
+}
 
 export default function Experience() {
     const headerRef = useRef<HTMLDivElement>(null)
@@ -277,7 +300,7 @@ export default function Experience() {
                             ))}
                         </svg>
 
-                        {/* Title labels, absolutely positioned over the map — hovering one reveals its story */}
+                        {/* Title labels + hover popovers, absolutely positioned over the map */}
                         <div className="relative -mt-[460px]" style={{ height: CANVAS_H }}>
                             {stops.map((stop) => (
                                 <span
@@ -296,51 +319,50 @@ export default function Experience() {
                                     {stop.title}
                                 </span>
                             ))}
+
+                            {/* Detail popover — appears right next to the node, on whichever side
+                                (above/below) isn't already taken by the title, so it's always in
+                                view with zero page scroll needed. */}
+                            <AnimatePresence>
+                                {activeStop && (
+                                    <motion.div
+                                        key={activeStop.id}
+                                        onMouseEnter={() => open(activeStop.id)}
+                                        onMouseLeave={scheduleClose}
+                                        initial={{ opacity: 0, y: activeStop.titleAbove ? -10 : 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: activeStop.titleAbove ? -10 : 10 }}
+                                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                                        style={popoverStyle(activeStop)}
+                                        className="absolute z-30 w-[290px] premium-card !p-5"
+                                    >
+                                        <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit inline-block mb-2.5">
+                                            {activeStop.period}
+                                        </span>
+                                        <h3 className="text-base font-semibold text-foreground leading-snug">{activeStop.role}</h3>
+                                        <p className="text-caption text-foreground-muted font-medium mb-2.5">{activeStop.company}</p>
+                                        <p className="text-caption text-foreground-muted leading-relaxed">{activeStop.description}</p>
+
+                                        {activeStop.highlights && (
+                                            <ul className="mt-3 pt-3 border-t border-border space-y-1.5 max-h-32 overflow-y-auto pr-1">
+                                                {activeStop.highlights.map((h) => (
+                                                    <li key={`${h.event}-${h.when}`} className="text-[11px] leading-snug">
+                                                        <span className="text-foreground font-medium">{h.role}</span>
+                                                        <span className="text-foreground-muted"> — {h.event}</span>
+                                                        <span className="text-foreground-muted font-mono"> · {h.when}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
                 </motion.div>
 
-                <p className="text-caption text-foreground-muted mt-2 mb-6 md:hidden">← swipe the map, tap a title for its story →</p>
-                <p className="text-caption text-foreground-muted mt-2 mb-6 hidden md:block">Hover a title on the map to see its story</p>
-
-                {/* Detail panel — drops down under the map for whichever stop is active */}
-                <div
-                    className="min-h-[190px]"
-                    onMouseEnter={() => activeId && open(activeId)}
-                    onMouseLeave={scheduleClose}
-                >
-                    <AnimatePresence mode="wait">
-                        {activeStop && (
-                            <motion.div
-                                key={activeStop.id}
-                                initial={{ opacity: 0, y: -16 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                                className="premium-card !p-6 md:!p-8 max-w-2xl"
-                            >
-                                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-border whitespace-nowrap w-fit inline-block mb-3">
-                                    {activeStop.period}
-                                </span>
-                                <h3 className="text-lg font-semibold text-foreground leading-snug">{activeStop.role}</h3>
-                                <p className="text-body-sm text-foreground-muted font-medium mb-3">{activeStop.company}</p>
-                                <p className="text-body-sm text-foreground-muted leading-relaxed">{activeStop.description}</p>
-
-                                {activeStop.highlights && (
-                                    <ul className="mt-4 pt-4 border-t border-border space-y-2 max-h-40 overflow-y-auto pr-1">
-                                        {activeStop.highlights.map((h) => (
-                                            <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
-                                                <span className="text-foreground font-medium">{h.role}</span>
-                                                <span className="text-foreground-muted"> — {h.event}</span>
-                                                <span className="text-foreground-muted font-mono"> · {h.when}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                <p className="text-caption text-foreground-muted mt-2 md:hidden">← swipe the map, tap a title for its story →</p>
+                <p className="text-caption text-foreground-muted mt-2 hidden md:block">Hover a title on the map to see its story</p>
             </div>
         </section>
     )
