@@ -12,6 +12,21 @@ interface MoreProject {
 
 const moreProjects: MoreProject[] = [
     {
+        title: 'SangamDrishti — Emergency Command & Control',
+        image: 'https://github.com/user-attachments/assets/f5579b80-e611-4f13-bcca-4a8b96749d8e',
+        link: 'https://github.com/okayniti/Sangam-Drishti',
+    },
+    {
+        title: 'Aurora — AI Productivity Dashboard',
+        image: '/aurora.png',
+        link: 'https://github.com/okayniti/Aurora',
+    },
+    {
+        title: 'VocaSense Kids — AI Vocal Emotion Analyzer',
+        image: '/vocasense.png',
+        link: 'https://github.com/okayniti/VocaSense-Kids',
+    },
+    {
         title: 'Aspirant India Initiative',
         image: '/AspirantWebsite.png',
         link: 'https://github.com/okayniti/Aspirant-India-Initiative',

@@ -22,7 +22,7 @@ export const projects: Project[] = [
         image: 'https://github.com/user-attachments/assets/f5579b80-e611-4f13-bcca-4a8b96749d8e',
         year: '2026',
         problem: 'Eliminated human triage latency and enabled instant situational awareness under crisis conditions.',
-        link: 'https://github.com/okayniti',
+        link: 'https://github.com/okayniti/Sangam-Drishti',
     },
     {
         id: 'aurora',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
         image: '/aurora.png',
         year: '2026',
         problem: 'Optimized bundle sizes to 105 KB and minimized server-side compute overhead for real-time model inference.',
-        link: 'https://github.com/okayniti',
+        link: 'https://github.com/okayniti/Aurora',
     },
     {
         id: 'vocasense',
@@ -46,6 +46,6 @@ export const projects: Project[] = [
         image: '/vocasense.png',
         year: '2025',
         problem: 'Correcting sentiment analysis models to accurately interpret the high pitch and energy variations of children\'s vocal patterns while filtering background noise.',
-        link: 'https://github.com/okayniti/VocaSense',
+        link: 'https://github.com/okayniti/VocaSense-Kids',
     },
 ]
