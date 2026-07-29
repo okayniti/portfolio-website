@@ -101,6 +101,10 @@ const config: Config = {
                     '0%': { transform: 'translateX(0%)' },
                     '100%': { transform: 'translateX(-50%)' },
                 },
+                'marquee-reverse': {
+                    '0%': { transform: 'translateX(-50%)' },
+                    '100%': { transform: 'translateX(0%)' },
+                },
             },
             animation: {
                 'fade-up': 'fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -110,6 +114,7 @@ const config: Config = {
                 'float-slow': 'float-slow 7s ease-in-out infinite',
                 'pulse-soft': 'pulse-soft 3s ease-in-out infinite',
                 'marquee': 'marquee 30s linear infinite',
+                'marquee-reverse': 'marquee-reverse 30s linear infinite',
             },
         },
     },

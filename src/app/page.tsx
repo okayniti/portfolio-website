@@ -4,6 +4,7 @@ import ScrollStatement from '@/components/ScrollStatement'
 import About from '@/components/About'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
+import SkillsMarquee from '@/components/SkillsMarquee'
 import Experience from '@/components/Experience'
 import Achievements from '@/components/Achievements'
 import Contact from '@/components/Contact'
@@ -21,6 +22,7 @@ export default function Home() {
                 <Projects />
                 <Skills />
                 <Experience />
+                <SkillsMarquee />
                 <Achievements />
                 <Contact />
             </main>
