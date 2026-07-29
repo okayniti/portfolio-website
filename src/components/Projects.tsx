@@ -7,6 +7,7 @@ import { projects } from '@/lib/projects'
 import SectionHeader from './SectionHeader'
 import MagneticButton from './MagneticButton'
 import TiltCard from './TiltCard'
+import MoreProjects from './MoreProjects'
 
 export default function Projects() {
     const ref = useRef<HTMLElement>(null)
@@ -40,6 +41,10 @@ export default function Projects() {
                             isInView={isInView}
                         />
                     ))}
+                </div>
+
+                <div className="mt-16 md:mt-20">
+                    <MoreProjects />
                 </div>
             </div>
         </section>

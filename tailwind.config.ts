@@ -115,6 +115,7 @@ const config: Config = {
                 'pulse-soft': 'pulse-soft 3s ease-in-out infinite',
                 'marquee': 'marquee 30s linear infinite',
                 'marquee-reverse': 'marquee-reverse 30s linear infinite',
+                'marquee-slow': 'marquee 45s linear infinite',
             },
         },
     },
