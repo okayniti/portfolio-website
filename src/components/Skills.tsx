@@ -1,9 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useTransform, motion, MotionValue } from 'framer-motion'
 import { Brain, Code2, Wrench, Globe } from 'lucide-react'
-import SectionHeader from './SectionHeader'
+import { ContainerScroll } from './ui/container-scroll-animation'
 
 const skillCategories = [
     {
@@ -28,66 +27,132 @@ const skillCategories = [
     },
 ]
 
+const SEGMENT = 1 / skillCategories.length
+
 export default function Skills() {
-    const ref = useRef<HTMLElement>(null)
-    const isInView = useInView(ref, { once: true, margin: '-60px' })
-
     return (
-        <section ref={ref} id="skills" className="section-padding relative">
+        <section id="skills" className="section-padding relative">
             <div className="container-content">
-                <SectionHeader
-                    label="My Skills"
-                    heading="Key Competencies"
-                    align="center"
-                />
-
-                <motion.div
-                    className="grid sm:grid-cols-2 gap-6"
-                    initial="hidden"
-                    animate={isInView ? 'visible' : 'hidden'}
-                    variants={{
-                        hidden: {},
-                        visible: { transition: { staggerChildren: 0.1 } },
-                    }}
+                <ContainerScroll
+                    titleComponent={
+                        <>
+                            <p className="section-label justify-center" style={{ justifyContent: 'center' }}>
+                                My Skills
+                            </p>
+                            <h2 className="text-display font-display text-balance">
+                                Key Competencies
+                            </h2>
+                        </>
+                    }
+                    sticky
                 >
-                    {skillCategories.map((category) => {
-                        const Icon = category.icon
-                        return (
-                            <motion.div
-                                key={category.title}
-                                className="premium-card group"
-                                variants={{
-                                    hidden: { opacity: 0, y: 24 },
-                                    visible: {
-                                        opacity: 1,
-                                        y: 0,
-                                        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                                    },
-                                }}
-                            >
-                                {/* Icon & Title */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center border border-border group-hover:bg-foreground group-hover:text-background transition-all duration-400">
-                                        <Icon size={22} strokeWidth={1.5} />
-                                    </div>
-                                    <h3 className="text-lg font-semibold text-foreground">
-                                        {category.title}
-                                    </h3>
-                                </div>
-
-                                {/* Skills */}
-                                <div className="flex flex-wrap gap-2">
-                                    {category.skills.map((skill) => (
-                                        <span key={skill} className="tech-pill">
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        )
-                    })}
-                </motion.div>
+                    {(progress) => (
+                        <div className="relative h-full w-full flex flex-col">
+                            <div className="relative flex-1">
+                                {skillCategories.map((category, index) => (
+                                    <SkillPanel
+                                        key={category.title}
+                                        category={category}
+                                        index={index}
+                                        total={skillCategories.length}
+                                        progress={progress}
+                                    />
+                                ))}
+                            </div>
+                            <ProgressDots total={skillCategories.length} progress={progress} />
+                        </div>
+                    )}
+                </ContainerScroll>
             </div>
         </section>
+    )
+}
+
+interface SkillPanelProps {
+    category: (typeof skillCategories)[number]
+    index: number
+    total: number
+    progress: MotionValue<number>
+}
+
+function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
+    const start = index * SEGMENT
+    const end = start + SEGMENT
+    const fadeMargin = SEGMENT * 0.25
+    const isFirst = index === 0
+    const isLast = index === total - 1
+
+    const opacity = useTransform(
+        progress,
+        [start - fadeMargin, start, end - fadeMargin, end],
+        [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0]
+    )
+    const y = useTransform(
+        progress,
+        [start - fadeMargin, start, end - fadeMargin, end],
+        [isFirst ? 0 : 16, 0, 0, isLast ? 0 : -16]
+    )
+
+    const Icon = category.icon
+
+    return (
+        <motion.div
+            style={{ opacity, y }}
+            className="absolute inset-0 flex flex-col justify-center p-6 md:p-10"
+        >
+            <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-card flex items-center justify-center border border-border shrink-0">
+                    <Icon size={22} strokeWidth={1.5} className="text-accent" />
+                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-foreground">
+                    {category.title}
+                </h3>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill) => (
+                    <span key={skill} className="tech-pill">
+                        {skill}
+                    </span>
+                ))}
+            </div>
+        </motion.div>
+    )
+}
+
+function ProgressDots({ total, progress }: { total: number; progress: MotionValue<number> }) {
+    return (
+        <div className="flex items-center justify-center gap-2 pb-6 md:pb-8">
+            {Array.from({ length: total }).map((_, index) => (
+                <Dot key={index} index={index} total={total} progress={progress} />
+            ))}
+        </div>
+    )
+}
+
+function Dot({ index, total, progress }: { index: number; total: number; progress: MotionValue<number> }) {
+    const segment = 1 / total
+    const start = index * segment
+    const end = start + segment
+    const fadeMargin = segment * 0.25
+    const isFirst = index === 0
+    const isLast = index === total - 1
+
+    const scale = useTransform(
+        progress,
+        [start - fadeMargin, start, end - fadeMargin, end],
+        [isFirst ? 1 : 0.6, 1, 1, isLast ? 1 : 0.6]
+    )
+    const opacity = useTransform(
+        progress,
+        [start - fadeMargin, start, end - fadeMargin, end],
+        [isFirst ? 1 : 0.3, 1, 1, isLast ? 1 : 0.3]
+    )
+
+    return (
+        <motion.span
+            style={{ scale, opacity }}
+            className="w-2 h-2 rounded-full bg-accent"
+        />
     )
 }
