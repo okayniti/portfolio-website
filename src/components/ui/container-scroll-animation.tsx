@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { useScroll, useTransform, motion, MotionValue, type UseScrollOptions } from "framer-motion";
 
-const STICKY_TOP_PX = { base: 96, md: 112 }; // matches top-24 / md:top-28
+const STICKY_TOP_PX = { base: 112, md: 136 }; // matches top-28 / md:top-34
 
 /**
  * Progress driven by a sticky element's actual pin/unpin window, measured
@@ -97,6 +97,10 @@ export const ContainerScroll = ({
   const rotate = useTransform(progress, [0, 1], [20, 0]);
   const scale = useTransform(progress, [0, 1], scaleDimensions());
   const translate = useTransform(progress, [0, 1], [0, -100]);
+  // Sticky headings stay pinned near the nav — a full -100px drift would
+  // carry them under the fixed header by the later stages, so keep their
+  // parallax much smaller than the card's.
+  const headerTranslate = useTransform(progress, [0, 1], [0, sticky ? -16 : -100]);
 
   return (
     <div
@@ -111,15 +115,15 @@ export const ContainerScroll = ({
         ref={stickyRef}
         className={
           sticky
-            ? "sticky top-24 md:top-28 w-full relative"
+            ? "sticky top-28 md:top-[8.5rem] w-full relative"
             : "py-10 md:py-40 w-full relative"
         }
         style={{
           perspective: "1000px",
         }}
       >
-        <Header translate={translate} titleComponent={titleComponent} />
-        <Card rotate={rotate} translate={translate} scale={scale}>
+        <Header translate={headerTranslate} titleComponent={titleComponent} />
+        <Card rotate={rotate} translate={translate} scale={scale} sticky={sticky}>
           {typeof children === "function" ? children(progress) : children}
         </Card>
       </div>
@@ -144,11 +148,13 @@ export const Card = ({
   rotate,
   scale,
   children,
+  sticky,
 }: {
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
   translate: MotionValue<number>;
   children: React.ReactNode;
+  sticky?: boolean;
 }) => {
   return (
     <motion.div
@@ -158,7 +164,9 @@ export const Card = ({
         boxShadow:
           "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003, 0 0 60px -15px rgba(237,122,54,0.2)",
       }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-border-strong p-2 md:p-6 bg-card rounded-[30px] shadow-2xl"
+      className={`max-w-5xl mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-border-strong p-2 md:p-6 bg-card rounded-[30px] shadow-2xl ${
+        sticky ? "mt-8 md:mt-10" : "-mt-12"
+      }`}
     >
       <div className="h-full w-full overflow-hidden rounded-2xl bg-background md:rounded-2xl md:p-4">
         {children}
