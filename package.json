@@ -11,6 +11,7 @@
   "dependencies": {
     "framer-motion": "^11.0.0",
     "geist": "^1.7.2",
+    "lodash": "^4.18.1",
     "lucide-react": "^0.460.0",
     "next": "^14.2.0",
     "react": "^18.2.0",
@@ -18,6 +19,7 @@
     "roughjs": "^4.6.6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.25",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
