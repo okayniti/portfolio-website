@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { LetterSwapPingPong } from './ui/letter-swap'
+import { LetterSwapForward, LetterSwapPingPong } from './ui/letter-swap'
 
 const READY_DELAY_MS = 2200
 
@@ -40,7 +40,11 @@ export default function LoadingScreen() {
                             Portfolio
                         </p>
                         <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-display font-bold text-accent tracking-wide leading-none text-center">
-                            NITI KANOONGO
+                            <LetterSwapForward
+                                label="NITI KANOONGO"
+                                staggerFrom="center"
+                                reverse={false}
+                            />
                         </h1>
                     </motion.div>
 
