@@ -24,7 +24,7 @@ export function OrbitLogos({
     className = '',
 }: OrbitLogosProps) {
     const radius = size / 2
-    const nodeSize = 36
+    const nodeSize = 44
 
     return (
         <div
@@ -49,12 +49,12 @@ export function OrbitLogos({
                     return (
                         <motion.div
                             key={item.label}
-                            className="group absolute flex items-center justify-center rounded-full bg-card border border-border text-foreground-muted transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                            className="group absolute flex items-center justify-center rounded-full bg-card border border-border transition-colors duration-300 hover:border-accent/50"
                             style={{ width: nodeSize, height: nodeSize, left: x, top: y }}
                             animate={{ rotate: -360 }}
                             transition={{ duration, repeat: Infinity, ease: 'linear' }}
                         >
-                            <span className="text-base" aria-hidden="true">
+                            <span className="text-xl leading-none" aria-hidden="true">
                                 {item.icon}
                             </span>
                             <span className="sr-only">{item.label}</span>
@@ -65,7 +65,7 @@ export function OrbitLogos({
 
             {/* center hub */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 rounded-full bg-background border-2 border-accent/40 flex items-center justify-center text-accent shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-background border-2 border-accent/40 flex items-center justify-center text-accent shadow-lg">
                     {centerIcon}
                 </div>
             </div>

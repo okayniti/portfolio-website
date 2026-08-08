@@ -33,11 +33,11 @@ const skillCategories = [
         icon: Brain,
         skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'SHAP', 'LSTM', 'CNN', 'RAG', 'Gemini API', 'Prompt Engineering', 'OpenCV'],
         orbit: [
-            { icon: <SiPytorch />, label: 'PyTorch' },
-            { icon: <SiTensorflow />, label: 'TensorFlow' },
-            { icon: <SiScikitlearn />, label: 'Scikit-learn' },
-            { icon: <SiOpencv />, label: 'OpenCV' },
-            { icon: <SiGooglegemini />, label: 'Gemini API' },
+            { icon: <SiPytorch color="#EE4C2C" />, label: 'PyTorch' },
+            { icon: <SiTensorflow color="#FF6F00" />, label: 'TensorFlow' },
+            { icon: <SiScikitlearn color="#F7931E" />, label: 'Scikit-learn' },
+            { icon: <SiOpencv color="#5C3EE8" />, label: 'OpenCV' },
+            { icon: <SiGooglegemini color="#8E75B2" />, label: 'Gemini API' },
         ] satisfies OrbitItem[],
     },
     {
@@ -45,11 +45,11 @@ const skillCategories = [
         icon: Globe,
         skills: ['Next.js', 'React', 'FastAPI', 'Node.js', 'Express.js', 'Socket.io', 'REST APIs', 'WebSockets'],
         orbit: [
-            { icon: <SiNextdotjs />, label: 'Next.js' },
-            { icon: <SiReact />, label: 'React' },
-            { icon: <SiFastapi />, label: 'FastAPI' },
-            { icon: <SiNodedotjs />, label: 'Node.js' },
-            { icon: <SiSocketdotio />, label: 'Socket.io' },
+            { icon: <SiNextdotjs color="#FFFFFF" />, label: 'Next.js' },
+            { icon: <SiReact color="#61DAFB" />, label: 'React' },
+            { icon: <SiFastapi color="#009688" />, label: 'FastAPI' },
+            { icon: <SiNodedotjs color="#339933" />, label: 'Node.js' },
+            { icon: <SiSocketdotio color="#FFFFFF" />, label: 'Socket.io' },
         ] satisfies OrbitItem[],
     },
     {
@@ -57,12 +57,12 @@ const skillCategories = [
         icon: Wrench,
         skills: ['Docker', 'Git', 'Linux', 'GCP', 'AWS', 'Azure', 'PostgreSQL', 'MongoDB', 'Firebase', 'Redis', 'Distributed Systems', 'Async Concurrency', 'System Design'],
         orbit: [
-            { icon: <SiDocker />, label: 'Docker' },
-            { icon: <FaAws />, label: 'AWS' },
-            { icon: <SiGooglecloud />, label: 'GCP' },
-            { icon: <SiPostgresql />, label: 'PostgreSQL' },
-            { icon: <SiMongodb />, label: 'MongoDB' },
-            { icon: <SiRedis />, label: 'Redis' },
+            { icon: <SiDocker color="#2496ED" />, label: 'Docker' },
+            { icon: <FaAws color="#FF9900" />, label: 'AWS' },
+            { icon: <SiGooglecloud color="#4285F4" />, label: 'GCP' },
+            { icon: <SiPostgresql color="#4169E1" />, label: 'PostgreSQL' },
+            { icon: <SiMongodb color="#47A248" />, label: 'MongoDB' },
+            { icon: <SiRedis color="#DC382D" />, label: 'Redis' },
         ] satisfies OrbitItem[],
     },
     {
@@ -70,10 +70,10 @@ const skillCategories = [
         icon: Code2,
         skills: ['Python', 'C++', 'JavaScript', 'SQL', 'Bash'],
         orbit: [
-            { icon: <SiPython />, label: 'Python' },
-            { icon: <SiCplusplus />, label: 'C++' },
-            { icon: <SiJavascript />, label: 'JavaScript' },
-            { icon: <SiGnubash />, label: 'Bash' },
+            { icon: <SiPython color="#3776AB" />, label: 'Python' },
+            { icon: <SiCplusplus color="#00599C" />, label: 'C++' },
+            { icon: <SiJavascript color="#F7DF1E" />, label: 'JavaScript' },
+            { icon: <SiGnubash color="#4EAA25" />, label: 'Bash' },
         ] satisfies OrbitItem[],
     },
 ]
@@ -171,7 +171,7 @@ function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
             <OrbitLogos
                 centerIcon={<Icon size={20} strokeWidth={1.5} />}
                 items={category.orbit}
-                size={150}
+                size={190}
                 className="mt-6 md:mt-8"
             />
         </motion.div>
