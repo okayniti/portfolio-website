@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter_Tight, Caveat } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
+import AnimatedBackground from '@/components/AnimatedBackground'
 import './globals.css'
 
 // Fallback for the -apple-system stack on non-Apple devices — true SF Pro
@@ -44,6 +45,7 @@ export default function RootLayout({
             className={`${interTight.variable} ${caveat.variable} ${GeistMono.variable}`}
         >
             <body className="min-h-screen bg-background text-foreground antialiased">
+                <AnimatedBackground />
                 {children}
             </body>
         </html>
