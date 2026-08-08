@@ -2,28 +2,79 @@
 
 import { useTransform, motion, MotionValue } from 'framer-motion'
 import { Brain, Code2, Wrench, Globe } from 'lucide-react'
+import {
+    SiPytorch,
+    SiTensorflow,
+    SiScikitlearn,
+    SiOpencv,
+    SiGooglegemini,
+    SiNextdotjs,
+    SiReact,
+    SiFastapi,
+    SiNodedotjs,
+    SiSocketdotio,
+    SiDocker,
+    SiGooglecloud,
+    SiPostgresql,
+    SiMongodb,
+    SiRedis,
+    SiPython,
+    SiCplusplus,
+    SiJavascript,
+    SiGnubash,
+} from 'react-icons/si'
+import { FaAws } from 'react-icons/fa'
 import { ContainerScroll } from './ui/container-scroll-animation'
+import { OrbitLogos, type OrbitItem } from './ui/orbit-logos'
 
 const skillCategories = [
     {
         title: 'AI & Machine Learning Systems',
         icon: Brain,
         skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'SHAP', 'LSTM', 'CNN', 'RAG', 'Gemini API', 'Prompt Engineering', 'OpenCV'],
+        orbit: [
+            { icon: <SiPytorch />, label: 'PyTorch' },
+            { icon: <SiTensorflow />, label: 'TensorFlow' },
+            { icon: <SiScikitlearn />, label: 'Scikit-learn' },
+            { icon: <SiOpencv />, label: 'OpenCV' },
+            { icon: <SiGooglegemini />, label: 'Gemini API' },
+        ] satisfies OrbitItem[],
     },
     {
         title: 'Full-Stack & Real-Time Web',
         icon: Globe,
         skills: ['Next.js', 'React', 'FastAPI', 'Node.js', 'Express.js', 'Socket.io', 'REST APIs', 'WebSockets'],
+        orbit: [
+            { icon: <SiNextdotjs />, label: 'Next.js' },
+            { icon: <SiReact />, label: 'React' },
+            { icon: <SiFastapi />, label: 'FastAPI' },
+            { icon: <SiNodedotjs />, label: 'Node.js' },
+            { icon: <SiSocketdotio />, label: 'Socket.io' },
+        ] satisfies OrbitItem[],
     },
     {
         title: 'Infrastructure & Systems',
         icon: Wrench,
         skills: ['Docker', 'Git', 'Linux', 'GCP', 'AWS', 'Azure', 'PostgreSQL', 'MongoDB', 'Firebase', 'Redis', 'Distributed Systems', 'Async Concurrency', 'System Design'],
+        orbit: [
+            { icon: <SiDocker />, label: 'Docker' },
+            { icon: <FaAws />, label: 'AWS' },
+            { icon: <SiGooglecloud />, label: 'GCP' },
+            { icon: <SiPostgresql />, label: 'PostgreSQL' },
+            { icon: <SiMongodb />, label: 'MongoDB' },
+            { icon: <SiRedis />, label: 'Redis' },
+        ] satisfies OrbitItem[],
     },
     {
         title: 'Programming Languages',
         icon: Code2,
         skills: ['Python', 'C++', 'JavaScript', 'SQL', 'Bash'],
+        orbit: [
+            { icon: <SiPython />, label: 'Python' },
+            { icon: <SiCplusplus />, label: 'C++' },
+            { icon: <SiJavascript />, label: 'JavaScript' },
+            { icon: <SiGnubash />, label: 'Bash' },
+        ] satisfies OrbitItem[],
     },
 ]
 
@@ -116,6 +167,13 @@ function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
                     </span>
                 ))}
             </div>
+
+            <OrbitLogos
+                centerIcon={<Icon size={20} strokeWidth={1.5} />}
+                items={category.orbit}
+                size={150}
+                className="mt-6 md:mt-8"
+            />
         </motion.div>
     )
 }
