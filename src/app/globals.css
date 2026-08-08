@@ -25,12 +25,6 @@
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    
-    background-image: url('/bg-gradient.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
   }
 
   :focus-visible {
