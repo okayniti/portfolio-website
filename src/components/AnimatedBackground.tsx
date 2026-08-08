@@ -8,9 +8,9 @@ import { GradientWave } from './ui/gradient-wave'
 // field. Fewer, darker layers keep the base showing through more.
 const PASTEL_PALETTE = [
     '#140700',
-    '#3d1608',
-    '#d9631f',
-    '#ffb27a',
+    '#3a1608',
+    '#8a3c16',
+    '#ED7A36',
 ]
 
 export default function AnimatedBackground() {
