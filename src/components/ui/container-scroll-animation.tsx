@@ -164,8 +164,10 @@ export const Card = ({
         boxShadow:
           "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003, 0 0 60px -15px rgba(237,122,54,0.2)",
       }}
-      className={`max-w-5xl mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-border-strong p-2 md:p-6 bg-card rounded-[30px] shadow-2xl ${
-        sticky ? "mt-8 md:mt-10" : "-mt-12"
+      className={`max-w-5xl mx-auto w-full border-4 border-border-strong p-2 md:p-6 bg-card rounded-[30px] shadow-2xl ${
+        sticky
+          ? "h-[min(28rem,54svh)] md:h-[min(38rem,58svh)] mt-8 md:mt-10"
+          : "h-[30rem] md:h-[40rem] -mt-12"
       }`}
     >
       <div className="h-full w-full overflow-hidden rounded-2xl bg-background md:rounded-2xl md:p-4">
