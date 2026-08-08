@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter_Tight, Caveat } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
 import AnimatedBackground from '@/components/AnimatedBackground'
+import LoadingScreen from '@/components/LoadingScreen'
 import './globals.css'
 
 // Fallback for the -apple-system stack on non-Apple devices — true SF Pro
@@ -46,6 +47,7 @@ export default function RootLayout({
         >
             <body className="min-h-screen bg-background text-foreground antialiased">
                 <AnimatedBackground />
+                <LoadingScreen />
                 {children}
             </body>
         </html>
