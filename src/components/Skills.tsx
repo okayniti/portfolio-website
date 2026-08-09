@@ -171,7 +171,7 @@ function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
             <OrbitLogos
                 centerIcon={<Icon size={20} strokeWidth={1.5} />}
                 items={category.orbit}
-                size={190}
+                maxSize={320}
                 className="mt-4 md:mt-6"
             />
         </motion.div>
