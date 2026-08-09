@@ -149,7 +149,7 @@ function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
     return (
         <motion.div
             style={{ opacity, y }}
-            className="absolute inset-0 flex flex-col justify-center p-6 md:p-10"
+            className="absolute inset-0 flex flex-col justify-start overflow-hidden p-6 md:p-10"
         >
             <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-card flex items-center justify-center border border-border shrink-0">
@@ -172,7 +172,7 @@ function SkillPanel({ category, index, total, progress }: SkillPanelProps) {
                 centerIcon={<Icon size={20} strokeWidth={1.5} />}
                 items={category.orbit}
                 size={190}
-                className="mt-6 md:mt-8"
+                className="mt-4 md:mt-6"
             />
         </motion.div>
     )
