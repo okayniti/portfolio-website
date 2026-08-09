@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter_Tight, Caveat } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
-import AnimatedBackground from '@/components/AnimatedBackground'
 import LoadingScreen from '@/components/LoadingScreen'
 import './globals.css'
 
@@ -46,7 +45,6 @@ export default function RootLayout({
             className={`${interTight.variable} ${caveat.variable} ${GeistMono.variable}`}
         >
             <body className="min-h-screen bg-background text-foreground antialiased">
-                <AnimatedBackground />
                 <LoadingScreen />
                 {children}
             </body>
