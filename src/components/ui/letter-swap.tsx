@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Transition,
   motion,
@@ -17,6 +17,10 @@ interface TextProps {
   staggerFrom?: "first" | "last" | "center" | number
   className?: string
   onClick?: () => void
+  /** Play the swap automatically on mount instead of waiting for hover. */
+  auto?: boolean
+  /** Delay in ms before the automatic play starts — useful for cascading multiple instances. */
+  autoDelay?: number
 }
 
 export function LetterSwapForward({
@@ -30,6 +34,8 @@ export function LetterSwapForward({
   staggerFrom = "first",
   className,
   onClick,
+  auto = false,
+  autoDelay = 0,
   ...props
 }: TextProps) {
   const [scope, animate] = useAnimate()
@@ -84,6 +90,13 @@ export function LetterSwapForward({
       )
     })
   }
+
+  useEffect(() => {
+    if (!auto) return
+    const timer = setTimeout(hoverStart, autoDelay)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, autoDelay])
 
   return (
     <span
