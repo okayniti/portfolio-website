@@ -45,12 +45,12 @@ export default function LoadingScreen() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-nowrap items-center justify-center gap-4 md:gap-8 overflow-hidden max-w-full"
+                        className="flex flex-col items-center justify-center gap-1 md:gap-2 overflow-hidden max-w-full"
                     >
                         {Array.from({ length: NAME_COUNT }).map((_, i) => (
                             <span
                                 key={i}
-                                className="shrink-0 text-[clamp(0.7rem,1.9vw,1.4rem)] font-display font-bold text-accent tracking-wide whitespace-nowrap"
+                                className="text-[clamp(1.4rem,5vw,3rem)] font-display font-bold text-accent tracking-wide whitespace-nowrap leading-tight"
                             >
                                 <LetterSwapForward
                                     label="NITI KANOONGO"
