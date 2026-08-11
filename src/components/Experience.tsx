@@ -5,7 +5,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import rough from 'roughjs/bin/rough'
 import type { Options, PathInfo } from 'roughjs/bin/core'
-import { GlowingShadow } from './ui/glowing-shadow'
 
 interface Highlight {
     role: string
@@ -302,55 +301,53 @@ function ExperienceCard({ stop }: { stop: Stop }) {
                 hidden: { opacity: 0, y: 24 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
             }}
-            className="h-full"
+            className="premium-card !p-6 md:!p-8 !border-white/[0.14] h-full flex flex-col"
         >
-            <GlowingShadow className="p-6 md:p-8 h-full flex flex-col">
-                <div className="flex items-start justify-between gap-2 mb-4">
-                    <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-white/10 whitespace-nowrap w-fit">
-                        {stop.period}
-                    </span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5" aria-hidden="true" />
+            <div className="flex items-start justify-between gap-2 mb-4">
+                <span className="text-caption font-mono text-foreground-muted bg-background px-3 py-1 rounded-full border border-white/10 whitespace-nowrap w-fit">
+                    {stop.period}
+                </span>
+                <span className="w-2.5 h-2.5 rounded-full bg-accent shrink-0 mt-1.5" aria-hidden="true" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
+            <p className="text-body-sm text-foreground-muted font-medium mb-3">{stop.company}</p>
+            <p className="text-body-sm text-foreground-muted leading-relaxed">{stop.description}</p>
+
+            {stop.highlights && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                    <button
+                        onClick={() => setExpanded((v) => !v)}
+                        className="flex items-center gap-1.5 text-caption font-mono text-accent hover:text-white transition-colors"
+                    >
+                        {expanded ? 'Hide conferences' : 'View recent conferences'}
+                        <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                            <ChevronDown size={13} />
+                        </motion.span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                        {expanded && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                className="overflow-hidden"
+                            >
+                                <ul className="mt-3 space-y-2.5 pr-1">
+                                    {stop.highlights.map((h) => (
+                                        <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
+                                            <span className="text-foreground font-medium">{h.role}</span>
+                                            <span className="text-foreground-muted"> — {h.event}</span>
+                                            <span className="text-foreground-muted font-mono"> · {h.when}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground leading-snug">{stop.role}</h3>
-                <p className="text-body-sm text-foreground-muted font-medium mb-3">{stop.company}</p>
-                <p className="text-body-sm text-foreground-muted leading-relaxed">{stop.description}</p>
-
-                {stop.highlights && (
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                        <button
-                            onClick={() => setExpanded((v) => !v)}
-                            className="flex items-center gap-1.5 text-caption font-mono text-accent hover:text-white transition-colors"
-                        >
-                            {expanded ? 'Hide conferences' : 'View recent conferences'}
-                            <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                <ChevronDown size={13} />
-                            </motion.span>
-                        </button>
-
-                        <AnimatePresence initial={false}>
-                            {expanded && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                                    className="overflow-hidden"
-                                >
-                                    <ul className="mt-3 space-y-2.5 pr-1">
-                                        {stop.highlights.map((h) => (
-                                            <li key={`${h.event}-${h.when}`} className="text-caption leading-snug">
-                                                <span className="text-foreground font-medium">{h.role}</span>
-                                                <span className="text-foreground-muted"> — {h.event}</span>
-                                                <span className="text-foreground-muted font-mono"> · {h.when}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-                )}
-            </GlowingShadow>
+            )}
         </motion.div>
     )
 }
