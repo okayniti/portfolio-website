@@ -168,6 +168,16 @@
     @apply w-full h-px bg-border;
   }
 
+  /* Hides the scrollbar on an overflow container while keeping it scrollable */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Gradient text fade for footer */
   .text-gradient-fade {
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.08) 100%);

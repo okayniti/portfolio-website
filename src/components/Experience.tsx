@@ -215,7 +215,7 @@ export default function Experience() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={mapInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative -mx-6 md:-mx-10 lg:-mx-16 overflow-x-auto pb-4"
+                    className="relative -mx-6 md:-mx-10 lg:-mx-16 overflow-x-auto scrollbar-hide pb-4"
                 >
                     <div className="px-6 md:px-10 lg:px-16" style={{ width: 'max-content' }}>
                         <svg
